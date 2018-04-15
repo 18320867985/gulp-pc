@@ -48,7 +48,7 @@
 
 
 	// 选项卡tag-box tap 新的
-	$(".tab-big .tab-ttl .tab-item").on("tap", function(e) {
+	$(".tab-big .tab-ttl .tab-item").on("click", function(e) {
 		
 		e.preventDefault();
 		var p=$(this).parents(".tab-big");

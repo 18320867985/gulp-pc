@@ -19,7 +19,7 @@
 
 +(function($){
 	
-	$(".radio-btn-item").on("tap",function(){
+	$(".radio-btn-item").on("click",function(){
 		var p=$(this).parents(".radio-btn");
 		$(".radio-btn-item",p).removeClass("active");
 		$(this).addClass("active");
