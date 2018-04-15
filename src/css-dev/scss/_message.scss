@@ -1,5 +1,5 @@
 .message {
-    display: none;
+    //  display: none;
 }
 
 .message-mask {
@@ -121,5 +121,68 @@
         &+.alert-btn {
             margin-left: 25px;
         }
+    }
+}
+
+
+/*info*/
+
+.info-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -20px;
+    margin-left: -60px;
+    z-index: 9999;
+    text-align: center;
+    outline: 10px solid rgba(255, 255, 255, .3);
+    
+    /*标题0*/
+    .ttl.default {
+        padding: 13px 20px;
+        min-width: 120px;
+        font-size: 14px;
+        font-weight: 400;
+        color: #f8f8f8;
+        text-align: center;
+        background: #333;
+        border-radius: 4px;
+        box-shadow: 1px 1px 5px #ccc;
+    }
+    /*标题1*/
+    .ttl.success {
+        padding: 13px 20px;
+        min-width: 120px;
+        font-size: 14px;
+        font-weight: 400;
+        color: #fff;
+        text-align: center;
+        background: $text-success;
+        border-radius: 4px;
+        box-shadow: 1px 1px 5px #ccc;
+    }
+    /*标题2*/
+    .ttl.warning {
+        padding: 13px 20px;
+        min-width: 120px;
+        font-size: 14px;
+        font-weight: 400;
+        color: #fff;
+        text-align: center;
+        background: $text-warning;
+        border-radius: 4px;
+        box-shadow: 1px 1px 5px #ccc;
+    }
+    /*标题3*/
+    .ttl.danger {
+        padding: 13px 20px;
+        min-width: 120px;
+        font-size: 14px;
+        font-weight: 400;
+        color: #fff;
+        text-align: center;
+        background: $text-danger;
+        border-radius: 4px;
+        box-shadow: 1px 1px 5px #ccc;
     }
 }

@@ -63,6 +63,7 @@
 				
 				mess = mess || "是否确认删除数据?";
 				$(".message").remove();
+				
 				// 创建message
 				var message = document.createElement("div");
 				message.setAttribute("class", "message");
@@ -130,6 +131,7 @@
 				
 				mess = mess || "没有选择数据！";
 				$(".message").remove();
+				
 				// 创建message
 				var message = document.createElement("div");
 				message.setAttribute("class", "message");
@@ -158,7 +160,6 @@
 
 				$(".message").fadeIn();
 				$(".message").on("click", ".alert-btn.ok", function(e) {
-
 					$(".message").fadeOut().remove();
 				});
 
@@ -167,6 +168,61 @@
 		},
 
 	});
+	
+	
+	//  info
+	jQuery.fn.extend({
+		
+		info: function(mess,type) {
+			
+			this.each(function(i, v) {
+				
+				mess = mess || "信息提示框";
+				$(".message").remove();
+				type=typeof type==="number"?type:0;
+				var _class="default";
+				switch(type){
+					case 0:_class="default"; break;
+					case 1:_class="success"; break;
+					case 2:_class="warning"; break;
+					case 3:_class="danger"; break;
+					default:_class="default";
+				}
+				
+				// 创建message
+				var message = document.createElement("div");
+				message.setAttribute("class", "message");
+				
+				var message_box = document.createElement("div");
+				message_box.setAttribute("class", "info-box");
+
+				var ttl = document.createElement("h4");
+				ttl.setAttribute("class", "ttl "+_class);
+				ttl.innerText = mess;
+
+				message_box.appendChild(ttl);
+				message.appendChild(message_box);
+
+				var elm = document.body || document.documentElement;
+				elm.appendChild(message);
+
+				$(".message").fadeIn(600);
+				
+				
+				var setTimeoutId=	setTimeout(function(){
+					$(".message").fadeOut().queue(function(){
+						$(".message").remove();
+						 clearTimeout(setTimeoutId);
+					});
+					
+					//alert()
+				},1500);
+				
+			});
+		},
+		
+	});
+	
 	
 	
 	
