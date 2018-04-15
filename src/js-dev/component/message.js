@@ -100,14 +100,16 @@
 				$(".message").on("click", ".confirm-btn.ok", function(e) {
 
 					if(typeof okfun === "function") {
+						$(".message").fadeOut().remove();
 						okfun.call(v);
 					}
-					$(".message").fadeOut().remove();
+					
 				});
 
 				$(".message").on("click", ".confirm-btn.cancel", function(e) {
 
 					if(typeof cancelfun === "function") {
+					
 						cancelfun.call(v);
 					}
 					$(".message").fadeOut().remove();
@@ -118,11 +120,89 @@
 
 	});
 	
-	
+	//  confirm
+	jQuery.extend({
+		confirm: function(mess, okfun, cancelfun,obj) {
+			if(!arguments.length >= 2) {
+
+					throw new Error("prop is min three");
+				}
+			obj=obj||{};
+			var _okText=obj.ok||"确认";
+			var _cancelText=obj.cancel||"取消";
+				
+				mess = mess || "是否确认删除数据?";
+				$(".message").remove();
+				
+				// 创建message
+				var message = document.createElement("div");
+				message.setAttribute("class", "message");
+				var message_mask = document.createElement("div");
+				message_mask.setAttribute("class", "message-mask");
+
+				var message_box = document.createElement("div");
+				message_box.setAttribute("class", "confirm-box");
+
+				var ttl = document.createElement("h4");
+				ttl.setAttribute("class", "ttl");
+				ttl.innerText = mess;
+
+				var ok_btn = document.createElement("button");
+				ok_btn.setAttribute("type", "button");
+				ok_btn.setAttribute("class", "ok confirm-btn");
+				ok_btn.innerText = _okText;
+
+				var cancel_btn = document.createElement("button");
+				cancel_btn.setAttribute("type", "button");
+				cancel_btn.setAttribute("class", "cancel confirm-btn");
+				cancel_btn.innerText = _cancelText;
+
+				message_box.appendChild(ttl);
+				message_box.appendChild(ok_btn);
+				message_box.appendChild(cancel_btn);
+				message.appendChild(message_mask);
+				message.appendChild(message_box);
+
+				var elm = document.body || document.documentElement;
+				elm.appendChild(message);
+
+				$(".message").fadeIn();
+				$(".message").on("click", ".confirm-btn.ok", function(e) {
+
+					if(typeof okfun === "function") {
+						$(".message").fadeOut().remove();
+						okfun();
+					}
+					
+				});
+
+				$(".message").on("click", ".confirm-btn.cancel", function(e) {
+
+					if(typeof cancelfun === "function") {
+						cancelfun();
+					}
+					$(".message").fadeOut().remove();
+				});
+
+			
+		},
+
+	});
+
+
 	//  alert
 	jQuery.fn.extend({
 		
-		alert: function(mess,obj) {
+		alert:_alert
+	});
+	
+	//  alert
+	jQuery.extend({
+		
+		alert:_alert
+	});
+	
+	function _alert(mess,obj) {
 			
 			obj=obj||{};
 			var _okText=obj.ok||"确定";
@@ -165,18 +245,20 @@
 
 				
 			});
-		},
+		}
 
-	});
-	
-	
 	//  info
 	jQuery.fn.extend({
-		
-		info: function(mess,type) {
+		info: _info
+	});
+	
+	//  info
+	jQuery.extend({
+		info: _info
+	});
+	
+	 function _info(mess,type) {
 			
-			this.each(function(i, v) {
-				
 				mess = mess || "信息提示框";
 				$(".message").remove();
 				type=typeof type==="number"?type:0;
@@ -218,12 +300,8 @@
 					//alert()
 				},1500);
 				
-			});
-		},
 		
-	});
-	
-	
-	
+		}
+		
 	
 })();

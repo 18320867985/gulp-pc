@@ -126,7 +126,6 @@
 
 
 /*info*/
-
 .info-box {
     position: fixed;
     top: 50%;
@@ -135,7 +134,7 @@
     margin-left: -60px;
     z-index: 9999;
     text-align: center;
-    outline: 10px solid rgba(255, 255, 255, .3);
+    outline:none;
     
     /*标题0*/
     .ttl.default {
@@ -147,7 +146,7 @@
         text-align: center;
         background: #333;
         border-radius: 4px;
-        box-shadow: 1px 1px 5px #ccc;
+      
     }
     /*标题1*/
     .ttl.success {
@@ -159,7 +158,7 @@
         text-align: center;
         background: $text-success;
         border-radius: 4px;
-        box-shadow: 1px 1px 5px #ccc;
+      
     }
     /*标题2*/
     .ttl.warning {
@@ -171,7 +170,7 @@
         text-align: center;
         background: $text-warning;
         border-radius: 4px;
-        box-shadow: 1px 1px 5px #ccc;
+      
     }
     /*标题3*/
     .ttl.danger {
@@ -183,6 +182,6 @@
         text-align: center;
         background: $text-danger;
         border-radius: 4px;
-        box-shadow: 1px 1px 5px #ccc;
+       
     }
 }
