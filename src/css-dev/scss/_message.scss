@@ -1,5 +1,5 @@
 .message {
-    //  display: none;
+      display: none;
 }
 
 .message-mask {
@@ -126,6 +126,10 @@
 
 
 /*info*/
+
+.messageinfo {
+      display: none;
+}
 .info-box {
     position: fixed;
     top: 50%;

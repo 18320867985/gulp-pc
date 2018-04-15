@@ -53,7 +53,7 @@
 		confirm: function(mess, okfun, cancelfun,obj) {
 			if(!arguments.length >= 2) {
 
-					throw new Error("prop is min three");
+					throw new Error("property is must two");
 				}
 			obj=obj||{};
 			var _okText=obj.ok||"确认";
@@ -100,7 +100,7 @@
 				$(".message").on("click", ".confirm-btn.ok", function(e) {
 
 					if(typeof okfun === "function") {
-						$(".message").fadeOut().remove();
+						$(".message").remove();
 						okfun.call(v);
 					}
 					
@@ -112,7 +112,7 @@
 					
 						cancelfun.call(v);
 					}
-					$(".message").fadeOut().remove();
+					$(".message").remove();
 				});
 
 			});
@@ -125,7 +125,7 @@
 		confirm: function(mess, okfun, cancelfun,obj) {
 			if(!arguments.length >= 2) {
 
-					throw new Error("prop is min three");
+					throw new Error("property is must two");
 				}
 			obj=obj||{};
 			var _okText=obj.ok||"确认";
@@ -170,7 +170,7 @@
 				$(".message").on("click", ".confirm-btn.ok", function(e) {
 
 					if(typeof okfun === "function") {
-						$(".message").fadeOut().remove();
+						$(".message").remove();
 						okfun();
 					}
 					
@@ -181,7 +181,7 @@
 					if(typeof cancelfun === "function") {
 						cancelfun();
 					}
-					$(".message").fadeOut().remove();
+					$(".message").remove();
 				});
 
 			
@@ -240,7 +240,7 @@
 
 				$(".message").fadeIn();
 				$(".message").on("click", ".alert-btn.ok", function(e) {
-					$(".message").fadeOut().remove();
+					$(".message").remove();
 				});
 
 				
@@ -260,7 +260,7 @@
 	 function _info(mess,type) {
 			
 				mess = mess || "信息提示框";
-				$(".message").remove();
+				$(".messageinfo").remove();
 				type=typeof type==="number"?type:0;
 				var _class="default";
 				switch(type){
@@ -273,7 +273,7 @@
 				
 				// 创建message
 				var message = document.createElement("div");
-				message.setAttribute("class", "message");
+				message.setAttribute("class", "messageinfo");
 				
 				var message_box = document.createElement("div");
 				message_box.setAttribute("class", "info-box");
@@ -288,12 +288,10 @@
 				var elm = document.body || document.documentElement;
 				elm.appendChild(message);
 
-				$(".message").fadeIn(600);
-				
-				
+				$(".messageinfo").fadeIn(600);
 				var setTimeoutId=	setTimeout(function(){
-					$(".message").fadeOut().queue(function(){
-						$(".message").remove();
+					$(".messageinfo").fadeOut().queue(function(){
+						$(".messageinfo").remove();
 						 clearTimeout(setTimeoutId);
 					});
 					
