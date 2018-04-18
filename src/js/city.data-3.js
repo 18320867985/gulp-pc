@@ -1,6 +1,7 @@
 var cityData3 = [{
 	value: '110000',
 	text: '北京市',
+	py:"b",
 	children: [{
 		value: "110100",
 		text: "北京市",
@@ -66,6 +67,7 @@ var cityData3 = [{
 }, {
 	value: '120000',
 	text: '天津市',
+	py:"t",
 	children: [{
 		value: "120100",
 		text: "天津市",
@@ -134,6 +136,7 @@ var cityData3 = [{
 }, {
 	value: '130000',
 	text: '河北省',
+	py:"h",
 	children: [{
 		value: "130100",
 		text: "石家庄市",
@@ -743,6 +746,7 @@ var cityData3 = [{
 }, {
 	value: '140000',
 	text: '山西省',
+	py:"s",
 	children: [{
 		value: "140100",
 		text: "太原市",
@@ -1184,6 +1188,7 @@ var cityData3 = [{
 }, {
 	value: '150000',
 	text: '内蒙古',
+	py:"n",
 	children: [{
 		value: "150100",
 		text: "呼和浩特市",
@@ -1575,6 +1580,7 @@ var cityData3 = [{
 }, {
 	value: '210000',
 	text: '辽宁省',
+	py:"l",
 	children: [{
 		value: "210100",
 		text: "沈阳市",
@@ -1995,6 +2001,7 @@ var cityData3 = [{
 }, {
 	value: '220000',
 	text: '吉林省',
+	py:"j",
 	children: [{
 		value: "220100",
 		text: "长春市",
@@ -2254,6 +2261,7 @@ var cityData3 = [{
 }, {
 	value: '230000',
 	text: '黑龙江省',
+	py:"h",
 	children: [{
 		value: "230100",
 		text: "哈尔滨市",
@@ -2745,6 +2753,7 @@ var cityData3 = [{
 }, {
 	value: '310000',
 	text: '上海市',
+	py:"s",
 	children: [{
 		value: '310100',
 		text: '上海市',
@@ -2816,6 +2825,7 @@ var cityData3 = [{
 }, {
 	value: '320000',
 	text: '江苏省',
+	py:"j",
 	children: [{
 		value: "320100",
 		text: "南京市",
@@ -3247,6 +3257,7 @@ var cityData3 = [{
 }, {
 	value: '330000',
 	text: '浙江省',
+	py:"z",
 	children: [{
 		value: "330100",
 		text: "杭州市",
@@ -3598,6 +3609,7 @@ var cityData3 = [{
 }, {
 	value: '340000',
 	text: '安徽省',
+	py:"a",
 	children: [{
 		value: "340100",
 		text: "合肥市",
@@ -4038,6 +4050,7 @@ var cityData3 = [{
 }, {
 	value: '350000',
 	text: '福建省',
+	py:"f",
 	children: [{
 		value: "350100",
 		text: "福州市",
@@ -4360,6 +4373,7 @@ var cityData3 = [{
 }, {
 	value: '360000',
 	text: '江西省',
+	py:"j",
 	children: [{
 		value: "360100",
 		text: "南昌市",
@@ -4750,6 +4764,7 @@ var cityData3 = [{
 }, {
 	value: '370000',
 	text: '山东省',
+	py:"s",
 	children: [{
 		value: "370100",
 		text: "济南市",
@@ -5308,6 +5323,7 @@ var cityData3 = [{
 }, {
 	value: '410000',
 	text: '河南省',
+	py:"h",
 	children: [{
 		value: "410100",
 		text: "郑州市",
@@ -5911,6 +5927,7 @@ var cityData3 = [{
 }, {
 	value: '420000',
 	text: '湖北省',
+	py:"h",
 	children: [{
 		value: "420100",
 		text: "武汉市",
@@ -6327,6 +6344,7 @@ var cityData3 = [{
 }, {
 	value: '430000',
 	text: '湖南省',
+	py:"h",
 	children: [{
 		value: "430100",
 		text: "长沙市",
@@ -6795,6 +6813,7 @@ var cityData3 = [{
 }, {
 	value: '440000',
 	text: '广东省',
+	py:"g",
 	children: [{
 		value: "440100",
 		text: "广州市",
@@ -7482,6 +7501,7 @@ var cityData3 = [{
 }, {
 	value: '450000',
 	text: '广西壮族',
+	py:"g",
 	children: [{
 		value: "450100",
 		text: "南宁市",
@@ -7914,6 +7934,7 @@ var cityData3 = [{
 }, {
 	value: '460000',
 	text: '海南省',
+	py:"h",
 	children: [{
 		value: "460100",
 		text: "海口市",
@@ -7997,6 +8018,7 @@ var cityData3 = [{
 }, {
 	value: '500000',
 	text: '重庆',
+	py:"c",
 	children: [{
 		value: '500000',
 		text: '重庆',
@@ -8128,6 +8150,7 @@ var cityData3 = [{
 }, {
 	value: '510000',
 	text: '四川省',
+	py:"s",
 	children: [{
 		value: "510100",
 		text: "成都市",
@@ -8828,6 +8851,7 @@ var cityData3 = [{
 }, {
 	value: '520000',
 	text: '贵州省',
+	py:"g",
 	children: [{
 		value: "520100",
 		text: "贵阳市",
@@ -9162,6 +9186,7 @@ var cityData3 = [{
 }, {
 	value: '530000',
 	text: '云南省',
+	py:"y",
 	children: [{
 		value: "530100",
 		text: "昆明市",
@@ -9665,6 +9690,7 @@ var cityData3 = [{
 }, {
 	value: '540000',
 	text: '西藏',
+	py:"x",
 	children: [{
 		value: "540100",
 		text: "拉萨市",
@@ -9937,6 +9963,7 @@ var cityData3 = [{
 }, {
 	value: '610000',
 	text: '陕西省',
+	py:"s",
 	children: [{
 		value: "610100",
 		text: "西安市",
@@ -10332,6 +10359,7 @@ var cityData3 = [{
 }, {
 	value: '620000',
 	text: '甘肃省',
+	py:"g",
 	children: [{
 		value: "620100",
 		text: "兰州市",
@@ -10689,6 +10717,7 @@ var cityData3 = [{
 }, {
 	value: '630000',
 	text: '青海省',
+	py:"q",
 	children: [{
 		value: "630100",
 		text: "西宁市",
@@ -10878,6 +10907,7 @@ var cityData3 = [{
 }, {
 	value: '640000',
 	text: '宁夏',
+	py:"n",
 	children: [{
 		value: "640100",
 		text: "银川市",
@@ -10983,6 +11013,7 @@ var cityData3 = [{
 }, {
 	value: '650000',
 	text: '新疆',
+	py:"x",
 	children: [{
 		value: "650100",
 		text: "乌鲁木齐市",
@@ -11385,6 +11416,7 @@ var cityData3 = [{
 }, {
 	value: '710000',
 	text: '台湾省',
+	py:"t",
 	children: [{
 		value: "710100",
 		text: "台北市",
@@ -11627,6 +11659,7 @@ var cityData3 = [{
 }, {
 	value: '810000',
 	text: '香港',
+	py:"x",
 	children: [{
 		value: "810100",
 		text: "香港岛",
@@ -11697,6 +11730,7 @@ var cityData3 = [{
 }, {
 	value: '820000',
 	text: '澳门',
+	py:"a",
 	children: [{
 		value: "820100",
 		text: "澳门半岛"
@@ -11707,6 +11741,7 @@ var cityData3 = [{
 }, {
 	value: '990000',
 	text: '海外',
+	py:"h",
 	children: [{
 		value: "990100",
 		text: "海外"

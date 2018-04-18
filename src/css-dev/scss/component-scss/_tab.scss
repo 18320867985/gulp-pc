@@ -37,18 +37,15 @@
  * 
  * */
 
-.tab-box {
+/*tab*/
+
+.tab-ttl{
+    cursor: pointer;
+}
+.tab-content-item{
+    display: none;
     
     &.active{
-        
-    }
-}
-
-.tab-content-item {
-    display: none;
-    transition: all 0.8s;
-    &.active {
-        display: block;
-        background: #fff;
+      display: block;  
     }
 }
