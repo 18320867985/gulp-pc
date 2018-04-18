@@ -27,6 +27,7 @@
 							
  * */
 
+
 /*三联联动地址*/
 var treeSelectAddress = (function() {
 
@@ -34,14 +35,12 @@ var treeSelectAddress = (function() {
 		getProvince();
 
 		var listCity = [];
-		var result="";
-		var result2="";
+		var result = "";
+		var result2 = "";
 		// 获取省
 		function getProvince() {
-			
+
 			var province = $(".tree-address-1");
-			var city = $(".tree-address-2");
-			var district = $(".tree-address-3");
 			var list = cityData3; // 三联地址库
 			var docFragment = document.createDocumentFragment();
 
@@ -83,35 +82,42 @@ var treeSelectAddress = (function() {
 
 			province.append(docFragment);
 
-			$("li", province).click(function() {
-				result="";
-				$(city).html("");
-				$(district).html("");
+			$(".tree-address-1 li").click(function() {
+				result = "";
+				var p = $(this).parents(".tree-address-big");
+				var province=$(".tree-address-1",p);
+				var city=$(".tree-address-2",p)
+				var district =	$(".tree-address-3",p);
+				city.html("");
+				district.html("");
+				
 				$("li", province).removeClass("active");
 				$(this).addClass("active");
 				var value = $(this).attr("data-value");
 				var text = $(this).text();
-				result=text;
-				
+				result = text;
+
 				// 市
-				var p = $(this).parents(".tree-address");
 				$(".tree-address-ttl .tab-item ", p).eq(1).trigger("click");
 
 				// 添加市区
-				getCity(value);
+				getCity(value,city);
 
 			});
 
 		};
 
 		// 获取市
-		function getCity(val) {
-			var city = $(".tree-address-2");
-			var district = $(".tree-address-3");
+		function getCity(val,city) {
+			
+			var p = $(city).parents(".tree-address-big");
+			//var province=$(".tree-address-1",p);
+			var city=$(".tree-address-2",p)
+			var district =	$(".tree-address-3",p);
+				
 			var list = cityData3; // 三联地址库
 			val = typeof val === "string" ? val : "";
 			val = $.trim(val);
-			var city = $(".tree-address-2");
 			list2 = common.list.where(list, function(item) {
 				return item.value === val;
 			});
@@ -134,23 +140,23 @@ var treeSelectAddress = (function() {
 				$(this).addClass("active");
 				var value = $(this).attr("data-value");
 				var text = $(this).text();
-					result2=	result+"-"+text;
-					$(this).parents(".tree-address-big").find(".tree-address-btn").val(result2);
+				result2 = result + "-" + text;
+				$(this).parents(".tree-address-big").find(".tree-address-btn").val(result2);
 
 				// 市
 				var p = $(this).parents(".tree-address");
 				$(".tree-address-ttl .tab-item", p).eq(2).click();
 
 				// 添加区域
-				getDistrict(value);
+				getDistrict(value,district);
 
 			});
 
 		};
 
 		// 获取区
-		function getDistrict(val) {
-			var district = $(".tree-address-3");
+		function getDistrict(val,district) {
+			
 			val = typeof val === "string" ? val : "";
 			val = $.trim(val);
 
@@ -177,17 +183,15 @@ var treeSelectAddress = (function() {
 				$(this).addClass("active");
 				var value = $(this).attr("data-value");
 				var text = $(this).text();
-				var result3=	result2+"-"+text;
-				result3= result3.replace(/-$/,"");
+				var result3 = result2 + "-" + text;
+				result3 = result3.replace(/-$/, "");
 				$(this).parents(".tree-address-big").find(".tree-address-btn").val(result3);
 				$(this).parents(".tree-address-big").find(".tree-address").hide();
-			
 
 			});
 		};
 
 	}
-	
 
 	$(function() {
 		// 地址焦点移开
