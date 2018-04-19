@@ -1,7 +1,7 @@
 /*
  <div class="ojqzoom">
 	<!--大图-->
-		<div class=" jqzoom-img">
+		<div class=" jqzoom-img" data-size="4">
 			<img class="orderdtl-l-img" src="./images/板块图片2.png" alt="大图" />
 			</div>
 			<div class=" jqzoom-content">
@@ -34,15 +34,15 @@ var  jqzoom = (function($) {
 	
 		//缩列图
 		$(".jqzoom-content-imgs img").hover(function() {
-
+			
 			$(".jqzoom-img img").attr("src", $(this).attr("src")).hide().show();
 
 		});
 		
 		var list = {};
 		list.index = 0;
-
-		list.df = 4;
+         var _size=$(".jqzoom").attr("data-size")||4;
+		list.df = _size;
 		list.size = $(".jqzoom-content-imgs li").size();
 
 
