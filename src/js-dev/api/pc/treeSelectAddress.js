@@ -50,7 +50,7 @@ var treeSelectAddress = (function() {
 				},
 				{
 					key: "h-k",
-					val: /h|i|g|k/
+					val: /h|i|j|k/
 				},
 				{
 					key: "l-s",
