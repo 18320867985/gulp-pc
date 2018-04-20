@@ -41,10 +41,10 @@
         }
     }
     .left-btn {
-        left: 5px;
+        left: 8px;
     }
     .right-btn {
-        right: 5px;
+        right: 8px;
     }
 }
 
@@ -52,8 +52,22 @@
 .jqzoom-content-imgs {
     position: relative;
     white-space: nowrap;
+    font-size: 0;
     li {
         display: inline-block;
-        float: none;
+        box-sizing: border-box;
+       font-size: 12px;
+        img{
+             box-sizing: border-box;
+             padding: 2px;
+             border: 1px solid #eee; 
+        }
+        
+        &.active{
+            img{
+                 border: 1px solid  orangered;  
+            }
+           
+        }
     }
 }

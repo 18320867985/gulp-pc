@@ -1,7 +1,7 @@
 /*
- <div class="ojqzoom">
+ <div class="jqzoom" data-size="4">
 	<!--大图-->
-		<div class=" jqzoom-img" data-size="4">
+		<div class=" jqzoom-img" >
 			<img class="orderdtl-l-img" src="./images/板块图片2.png" alt="大图" />
 			</div>
 			<div class=" jqzoom-content">
@@ -36,6 +36,9 @@ var  jqzoom = (function($) {
 		$(".jqzoom-content-imgs img").hover(function() {
 			
 			$(".jqzoom-img img").attr("src", $(this).attr("src")).hide().show();
+			var p= $(this).parents(".jqzoom");
+			$(".jqzoom-content-imgs li",p).removeClass("active");
+			$(this).parents("li").addClass("active");
 
 		});
 		
