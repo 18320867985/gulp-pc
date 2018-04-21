@@ -1,10 +1,10 @@
-﻿co
+﻿
 /*默认样式*/
 
 body {
     font-size: 12px;
-    font-family: "微软雅黑", "宋体";
-   // background: $body-bg;
+    font-family: $font-family;
+ 
 }
 
 .container-12 {
@@ -36,7 +36,6 @@ body {
     min-width: 300px;
 }
 
-
 /*ie8*/
 
 .no-mediaqueries .container,
@@ -51,34 +50,12 @@ body {
     margin-left: -15px;
 }
 
-body,
-div,
-p,
-ul,
-li,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-table,
-img {
-    margin: 0px;
-    padding: 0px;
-    outline: none;
-}
+
 
 img {
     display: inline-block;
 }
 
-span,
-a {
-    margin: 0px;
-    padding: 0px;
-    outline: none !important;
-}
 
 ul {
     list-style: none;
@@ -92,7 +69,7 @@ a:active {
 
 ul {
     list-style: none;
-    
+    ;
 }
 
 
@@ -136,7 +113,6 @@ ul {
 .bg-no2 {
     background: none !important;
 }
-
 
 
 .width-0-5 {
@@ -239,6 +215,107 @@ ul {
    clear: both;
 }
 
+/* use table width no float */
+.table-0-5 {
+    width: 5%;
+  
+}
+
+.table-1 {
+    width: 10%;
+  
+}
+
+.table-1-5 {
+    width: 15%;
+ 
+}
+
+.table-2 {
+    width: 20%;
+   
+}
+
+.table-2-5 {
+    width: 25%;
+   
+}
+
+.table-3 {
+    width: 30%;
+   
+}
+
+.table-3-5 {
+    width: 35%;
+   
+}
+
+.tabel-4 {
+    width: 40%;
+   
+}
+
+.table-4-5 {
+    width: 45%;
+   
+}
+
+.table-5 {
+    width: 50%;
+  
+}
+
+.table-5-5 {
+    width: 55%;
+   
+}
+
+.table-6 {
+    width: 60%;
+ 
+}
+
+.table-6-5 {
+    width: 65%;
+ 
+}
+
+.table-7 {
+    width: 70%;
+  
+}
+
+.table-7-5 {
+    width: 75%;
+ 
+}
+
+.table-8 {
+    width: 80%;
+    float: left;
+}
+
+.table-8-5 {
+    width: 85%;
+ 
+}
+
+.table-9 {
+    width: 90%;
+   
+}
+
+.table-9-5 {
+    width: 95%;
+ 
+}
+
+.table-100 {
+    width: 100%;
+  
+}
+
 
 .width-max100 {
     max-width: 100%;
@@ -318,15 +395,15 @@ input:focus,
 }
 
 .input-xs-x {
-    line-height: 25px;
-    height: 25px;
+    line-height: 28px;
+    height: 28px;
     padding: 2px 8px;
     font-size: 12px;
 }
 
 .btn-xs-x {
-    line-height: 25px !important;
-    height: 25px !important;
+    line-height: 28px !important;
+    height: 28px !important;
     padding: 0px 7px !important;
     font-size: 12px !important;
 }
