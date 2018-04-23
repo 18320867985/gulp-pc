@@ -1,8 +1,15 @@
 ﻿
 /*默认样式*/
 
+// clear element padding margin outline
+*{
+    padding: 0;
+    margin: 0;
+    outline: none;
+}
+
 body {
-    font-size: 12px;
+    font-size: 14px;
     font-family: $font-family;
  
 }
@@ -316,18 +323,6 @@ ul {
   
 }
 
-
-.width-max100 {
-    max-width: 100%;
-}
-
-.height-100 {
-    height: 100%;
-}
-
-.height-max100 {
-    max-height: 100%;
-}
 
 
 /*定位display*/

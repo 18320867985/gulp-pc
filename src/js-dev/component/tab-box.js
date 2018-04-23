@@ -60,7 +60,7 @@
 		$(".tab-content",p).find(target).addClass("active");
 		
 		// 点击触发自定义事件 
-		$(this).trigger("tab_select");
+		$(this).trigger("tab_select",[this]);
 
 	});
 
