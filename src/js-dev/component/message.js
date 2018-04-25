@@ -205,8 +205,6 @@
 		obj = obj || {};
 		var _okText = obj.ok || "确定";
 
-		this.each(function(i, v) {
-
 			mess = mess || "没有选择数据！";
 			$(".message").remove();
 
@@ -241,9 +239,9 @@
 				$(".message").remove();
 			});
 
-		});
+		
 	}
-
+	
 	//  info
 	jQuery.fn.extend({
 		info: _info
