@@ -227,6 +227,7 @@
 			// data map
 			map: function(data, fn) {
 				data = data || [];
+				var arrs=[];
 				if(data.constructor !== Array) {
 					throw new Error("第一个参数必须是个数组，第二是回调函数");
 				}
@@ -239,13 +240,13 @@
 
 					for(var i = 0; i < data.length; i++) {
 
-						data[i] = fn(data[i]) || data[i];
+						 arrs[i] = fn(data[i]) || data[i];
 
 					}
 
 				}
 
-				return data;
+				return arrs;
 
 			},
 
@@ -627,102 +628,5 @@
 
 	});
 
-	// exrend geolocation
-	Common.extend({
-		geolocation: {
-
-			// 检测是否支持地理定位
-			support: function() {
-				if(navigator.geolocation) {
-					return true;
-				} else {
-					alert("浏览器不支持地理定位。");
-					return false;
-				}
-
-			},
-
-			//定位失败
-			showError: function(error) {
-				switch(error.code) {
-					case error.PERMISSION_DENIED:
-						alert("定位失败,用户拒绝请求地理定位");
-						break;
-					case error.POSITION_UNAVAILABLE:
-						alert("定位失败,位置信息是不可用");
-						break;
-					case error.TIMEOUT:
-						alert("定位失败,请求获取用户位置超时");
-						break;
-					case error.UNKNOWN_ERROR:
-						alert("定位失败,定位系统失效");
-						break;
-				}
-			},
-
-			//获取当前定位的位置
-			getCurrentPosition: function(showPosition) {
-
-				if(Common.geolocation.support()) {
-
-					if(typeof showPosition === "function") {
-						navigator.geolocation.getCurrentPosition(showPosition, Common.geolocation.showError);
-					}
-
-				}
-			},
-
-			//获取当前定位的位置coords
-			getCoords: function() {
-
-				var coords = {};
-				if(Common.geolocation.support()) {
-					navigator.geolocation.getCurrentPosition(function(position) {
-						coords.lat = position.coords.latitude; //纬度 
-						coords.lag = position.coords.longitude; //经度 
-
-						alert(position)
-
-					}, Common.geolocation.showError);
-
-				}
-
-				return coords || null;
-			},
-
-			//获取当前定位的位置coords纬度 
-			getCoordsLat: function() {
-
-				var coords = {};
-				if(Common.geolocation.support()) {
-					navigator.geolocation.getCurrentPosition(function(position) {
-
-						coords.lat = position.coords.latitude; //纬度 
-
-					}, Common.geolocation.showError);
-
-				}
-
-				return coords.lat || null;
-			},
-			//获取当前定位的位置coords经度
-			getCoordsLag: function() {
-
-				var coords = {};
-				if(Common.geolocation.support()) {
-					navigator.geolocation.getCurrentPosition(function(position) {
-
-						coords.lag = position.coords.longitude; //经度 
-
-					}, Common.geolocation.showError);
-
-				}
-
-				return coords.lag || null;
-			},
-
-		}
-
-	});
-
+	
 })();
