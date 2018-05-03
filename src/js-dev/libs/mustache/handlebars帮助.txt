@@ -48,8 +48,6 @@
 				  <ul>
 				 	{{#people}}
 					 	<li>
-					 	
-					 	
 							  {{#gg firstName 1 }}
 							   <a href="">{{firstName}}</a>
 							   {{else}}
@@ -57,8 +55,6 @@
 							   <p>no data</p>
 							  {{/gg}}
 							  
-							  
-							
 					 	</li>
 				 	{{/people}}
 				 </ul>
@@ -88,12 +84,12 @@
 					 	<li>
 					 	
 					 	
-							  {{#gl  lastName 2 }}
+							  {{#lt  lastName 2 }}
 							   <a href="">{{lastName}}</a>
 							   {{else}}
 							   
 							  	 <p>no data</p>
-							  {{/gl}}
+							  {{/lt}}
 							  
 							  
 							

@@ -4868,7 +4868,7 @@ Date.prototype.formatString = function(fmt) { //author: meizz
 	}
 
 	//注册一个比较大小的Helper,判断v1是否小于v2
-         Handlebars.registerHelper("gl",function(v1,v2,options){
+         Handlebars.registerHelper("lt",function(v1,v2,options){
            if(v1<v2){
             //满足添加继续执行
              return options.fn(this);
