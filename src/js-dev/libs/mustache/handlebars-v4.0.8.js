@@ -4900,7 +4900,7 @@ Date.prototype.formatString = function(fmt) { //author: meizz
   		
   		
   		 //注册一个比较大小的Helper,判断v1是否等于v2
-         Handlebars.registerHelper("date",function(v1,v2,options){
+         Handlebars.registerHelper("setdate",function(v1,v2,options){
          		v1=Handlebars.jsonToDate(v1)
 	       		 var v=  Number(v1);
 	       		v= isNaN(v)?new  Date(1970,0,1,0,0,1):v;

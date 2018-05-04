@@ -34,9 +34,9 @@
 					 	<li>
 					 		 之前的格式： {{ firstName }}<br>
 					 		<!--日期时间过滤-->
-							  {{#date firstName "yyyy-MM-dd" }}
+							  {{#setdate firstName "yyyy-MM-dd" }}
 							   <a href="">{{firstName}}</a>
-							  {{/date}}
+							  {{/setdate}}
 							  
 							 	
 					 	</li>
