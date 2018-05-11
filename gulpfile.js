@@ -56,7 +56,7 @@ var eslint = require("gulp-eslint"); // 检查es5 ees6 js gulp-eshint
  */
 var babel = require("gulp-babel");
 
-//var ts = require("gulp-typescript"); //npm install --save-dev gulp-typescript 编译typeScript
+//var ts = require("gulp-typescript"); //npm install --save-dev typescript gulp gulp-typescript
 
 //var tsProject = ts.createProject("tsconfig.json");
 
