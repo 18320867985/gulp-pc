@@ -104,22 +104,27 @@
 		</div>
 
 		<script src="js/mobile-1.0.0.js" type="text/javascript" charset="utf-8"></script>
-		<script src="js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>-->
 		<script type="text/javascript">
-			
-
-			m(".btn").click(function() {
-				m(".animate").addAnimate("dh",1000,"linear",200,"infinite").animationFillMode();
+			var arr=[{Name:"mmm",Age:12,Gender:"女"},{Name:"mmm2",Age:12,Gender:"女"}];
+			$.post("http://localhost:4015/api/values",{p:{Name:"mmm",Age:12,Gender:"女"},a:"8888"},function(data){
+				console.log(data);
 				
-			});
-
-
+			})
 			
-			m(".btn2").click(function() {
-				m(".animate").animatePalyToggle()
-			});
-
- 			m(".btn").siblings()
+//
+//			m(".btn").click(function() {
+//				m(".animate").addAnimate("dh",1000,"linear",200,"infinite").animationFillMode();
+//				
+//			});
+//
+//
+//			
+//			m(".btn2").click(function() {
+//				m(".animate").animatePalyToggle()
+//			});
+//
+// 			m(".btn").siblings()
 		</script>
 	</body>
 
