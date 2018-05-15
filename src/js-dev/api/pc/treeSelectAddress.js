@@ -24,14 +24,21 @@
 			</div>
 	<span class="vd-req "></span>
 	</div>
-							
+
+	   // 三联联动地址点击触发自定义事件
+      $(document).on("treeSelectAddress-select", function (event, el) {
+            alert(el.innerText)
+      });
+      
  * */
 
 
-/*三联联动地址*/
-var treeSelectAddress = (function() {
 
+/*三联联动地址*/
+var treeSelectAddress = (function () {
+   
 	function _init() {
+	
 		getProvince();
 
 		var listCity = [];
@@ -145,7 +152,10 @@ var treeSelectAddress = (function() {
 
 				// 市
 				var p = $(this).parents(".tree-address");
-				$(".tree-address-ttl .tab-item", p).eq(2).click();
+                $(".tree-address-ttl .tab-item", p).eq(2).click();
+
+                //点击触发自定义事件
+                $(this).trigger("treeSelectAddress-select", [this]);
 
 				// 添加区域
 				getDistrict(value,district);
@@ -186,7 +196,10 @@ var treeSelectAddress = (function() {
 				var result3 = result2 + "-" + text;
 				result3 = result3.replace(/-$/, "");
 				$(this).parents(".tree-address-big").find(".tree-address-btn").val(result3);
-				$(this).parents(".tree-address-big").find(".tree-address").hide();
+                $(this).parents(".tree-address-big").find(".tree-address").hide();
+
+                //点击触发自定义事件
+                $(this).trigger("treeSelectAddress-select", [this]);
 
 			});
 		};
@@ -214,3 +227,5 @@ var treeSelectAddress = (function() {
 		init: _init
 	}
 })();
+
+
