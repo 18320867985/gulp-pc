@@ -19,7 +19,7 @@
 			</aside>
 		 </body>
 	 */
-	var scroll = (function($) {
+namespace.extend(rootObj, "api").scroll = (function($) {
 
 		var obj = {
 

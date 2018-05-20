@@ -8,7 +8,7 @@
  * data-src="images/Home/板块图片1.png"
  * > 
  * */
-var lazy = (function($) {
+namespace.extend(rootObj, "api").lazy = (function($) {
 
 	
 var _init = function() {

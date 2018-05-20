@@ -29,14 +29,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 	// string  trim
 	Common.extend({
-		trim: function trim(data) {
-
-			data = data || "";
-			if (typeof data !== "string") {
-				return "";
-			}
-			var str = data.replace(new RegExp("\\s*", "img"), "");
-
+		trim: function trim(txt) {
+			var str = "";
+			txt = typeof txt === "string" ? txt : "";
+			str = txt.replace(/^\s*|\s*$/img, "");
 			return str;
 		}
 	});
@@ -56,7 +52,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			//从WebAPI获取日期json数据 转换成日期时间戳
 			jsonToDate: function jsonToDate(apidate) {
 				var txts = apidate.replace("/Date(", "").replace(")/", "");
-				return parseInt(txts.trim());
+				return parseInt(Common.trim(txts));
 			},
 
 			// 取当前页面名称(不带后缀名)
@@ -216,6 +212,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			// data map
 			map: function map(data, fn) {
 				data = data || [];
+				var arrs = [];
 				if (data.constructor !== Array) {
 					throw new Error("第一个参数必须是个数组，第二是回调函数");
 				}
@@ -228,11 +225,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 					for (var i = 0; i < data.length; i++) {
 
-						data[i] = fn(data[i]) || data[i];
+						arrs[i] = fn(data[i]) || data[i];
 					}
 				}
 
-				return data;
+				return arrs;
 			},
 
 			//  data first
@@ -455,7 +452,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				expiresDate = typeof expiresDate === "number" ? expiresDate : 0;
 				dt.setDate(dt.getDate() + expiresDate);
 				var expires = dt;
-				document.cookie = encodeURIComponent(cookieName.replace(new RegExp("\\s*", "img"), "")) + "=" + encodeURIComponent(cookieValue) + ";expires=" + expires;
+				document.cookie = encodeURIComponent(Common.trim(cookieName)) + "=" + encodeURIComponent(cookieValue) + ";expires=" + expires;
 			},
 
 			getCookie: function getCookie(cookieName) {
@@ -478,8 +475,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 					var strs2 = strs[i].split("=");
 					try {
-						var _name = decodeURIComponent(strs2[0]).replace(new RegExp("\\s*", "img"), "");
-						var _val = decodeURIComponent(strs2[1]).replace(new RegExp("\\s*", "img"), "");
+						var _name = decodeURIComponent(strs2[0]);
+						var _val = decodeURIComponent(strs2[1]);
 						obj[_name] = _val;
 					} catch (e) {}
 				}
@@ -591,97 +588,94 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		}
 
 	});
-
-	// exrend geolocation
-	Common.extend({
-		geolocation: {
-
-			// 检测是否支持地理定位
-			support: function support() {
-				if (navigator.geolocation) {
-					return true;
-				} else {
-					alert("浏览器不支持地理定位。");
-					return false;
-				}
-			},
-
-			//定位失败
-			showError: function showError(error) {
-				switch (error.code) {
-					case error.PERMISSION_DENIED:
-						alert("定位失败,用户拒绝请求地理定位");
-						break;
-					case error.POSITION_UNAVAILABLE:
-						alert("定位失败,位置信息是不可用");
-						break;
-					case error.TIMEOUT:
-						alert("定位失败,请求获取用户位置超时");
-						break;
-					case error.UNKNOWN_ERROR:
-						alert("定位失败,定位系统失效");
-						break;
-				}
-			},
-
-			//获取当前定位的位置
-			getCurrentPosition: function getCurrentPosition(showPosition) {
-
-				if (Common.geolocation.support()) {
-
-					if (typeof showPosition === "function") {
-						navigator.geolocation.getCurrentPosition(showPosition, Common.geolocation.showError);
-					}
-				}
-			},
-
-			//获取当前定位的位置coords
-			getCoords: function getCoords() {
-
-				var coords = {};
-				if (Common.geolocation.support()) {
-					navigator.geolocation.getCurrentPosition(function (position) {
-						coords.lat = position.coords.latitude; //纬度 
-						coords.lag = position.coords.longitude; //经度 
-
-						alert(position);
-					}, Common.geolocation.showError);
-				}
-
-				return coords || null;
-			},
-
-			//获取当前定位的位置coords纬度 
-			getCoordsLat: function getCoordsLat() {
-
-				var coords = {};
-				if (Common.geolocation.support()) {
-					navigator.geolocation.getCurrentPosition(function (position) {
-
-						coords.lat = position.coords.latitude; //纬度 
-					}, Common.geolocation.showError);
-				}
-
-				return coords.lat || null;
-			},
-			//获取当前定位的位置coords经度
-			getCoordsLag: function getCoordsLag() {
-
-				var coords = {};
-				if (Common.geolocation.support()) {
-					navigator.geolocation.getCurrentPosition(function (position) {
-
-						coords.lag = position.coords.longitude; //经度 
-					}, Common.geolocation.showError);
-				}
-
-				return coords.lag || null;
-			}
-
-		}
-
-	});
 })();
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+/*鸭式变形法*/
+// 定义接口
+function Interface(interName, props) {
+    if (arguments.length !== 2) {
+        throw new Error("parameter length must is two");
+    }
+    if (typeof interName !== "string") {
+        throw new Error("interName must is string");
+    }
+    this.interName = interName;
+    this.props = [];
+    if ((typeof props === "undefined" ? "undefined" : _typeof(props)) === "object" && props.constructor === Array) {
+
+        for (var i in props) {
+            if (typeof props[i] === "string") {
+                this.props.push(props[i]);
+            }
+        }
+    }
+}
+
+// 检查是否实现接口
+Interface.check = function (obj) {
+    if (arguments.length < 2) {
+        throw new Error("arguments  length must  is two");
+    }
+    // 遍历接口
+    for (var i = 1; i < arguments.length; i++) {
+        var inter = arguments[i];
+        if (inter.constructor !== Interface) {
+            throw new Error("not Interface type ");
+        }
+        for (var y in inter.props) {
+            var propName = inter.props[y];
+
+            if (!obj[propName]) {
+                throw new Error(" Interface " + inter.interName + "  not implemented  properties name is " + propName);
+            }
+        }
+    }
+
+    return true;
+};
+
+/*实现例子*/
+
+//// 创建接口 Icat
+//var Icat = new Interface("Icat", ["add", "get"]);
+
+//// 创建类 Cat 并实现Icat接口
+//var Cat = function (name) {
+//    this.name = name;
+//    this.constructor.prototype.add = function () {
+//        alert("add");
+//    }
+//    this.constructor.prototype.get = function () {
+//        alert("get");
+//    }
+
+//    // 检查是否实现接口
+//    Interface.check(this, Icat);
+//}
+
+//var cat1 = new Cat();
+//cat1.add();
+var rootName = "hqs"; // 顶级命名空间
+var rootObj = window[rootName] = {};
+
+var namespace = {}; // 
+namespace.extend = function (ns, nsString) {
+	if (typeof nsString !== "string") {
+		throw new Error("nsString must string type");
+	}
+	var parent = ns;
+	var arrs = nsString.split(".");
+	for (var i = 0; i < arrs.length; i++) {
+		var prop = arrs[i];
+		if (typeof ns[prop] === "undefined") {
+			parent[prop] = {};
+		}
+		parent = parent[prop];
+	}
+
+	return parent;
+};
 /*
  * 默认js
  * 添加 class="bs-date " 
@@ -689,7 +683,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * 
  */
 
-var bsDate = function ($) {
+namespace.extend(rootObj, "api").bsDate = function ($) {
 
 	var _init = function _init() {
 		// bs 日历插件
@@ -719,16 +713,128 @@ var bsDate = function ($) {
  * iframe
  * **/
 
-var iframe = function ($) {
+namespace.extend(rootObj, "api").iframe = function ($) {
 
 	// 设置iframe 高度
 	var _setHeight = function _setHeight() {
-		var windows_h = $(document).height() + 50;
-		$(window.parent.document).find(".parent-window").css("height", windows_h);
+		var windows_h = parseInt($("body").height()) + 10;
+
+		$(window.parent.document).find(".parent-window").css("height", 0).css("height", windows_h);
 	};
 
 	return {
 		setHeight: _setHeight
+	};
+}(window.jQuery);
+/*
+ <div class="jqzoom" data-size="4">
+	<!--大图-->
+		<div class=" jqzoom-img" >
+			<img class="orderdtl-l-img" src="./images/板块图片2.png" alt="大图" />
+			</div>
+			<div class=" jqzoom-content">
+				<div class="jqzoom-content-wrap">
+					<!-- 左右按钮 -->
+				<button class="left-btn" type="button">
+					<span class="glyphicon glyphicon-menu-left"></span>
+				</button>
+
+				<button class="right-btn" type="button">
+					<span class="glyphicon glyphicon-menu-right"></span>
+				</button>
+				<!--小图列表-->
+				<ul class=" clearfix jqzoom-content-imgs ">
+					<li><img src="./images/板块图片2.png" alt="小图" /></li>
+					<li><img src="./images/板块图片3.png" alt="小图" /></li>
+					<li><img src="./images/板块图片4.png" alt="小图" /></li>
+					<li><img src="./images/板块图片5.png" alt="小图" /></li>
+					<li><img src="./images/板块图片5.png" alt="小图" /></li>
+					</ul>
+				</div>
+			</div>
+	</div>
+ * 
+ * */
+
+namespace.extend(rootObj, "api").jqzoom = function ($) {
+
+	var _init = function _init() {
+
+		//缩列图
+		$(".jqzoom-content-imgs img").hover(function () {
+
+			$(".jqzoom-img img").attr("src", $(this).attr("src")).hide().show();
+			var p = $(this).parents(".jqzoom");
+			$(".jqzoom-content-imgs li", p).removeClass("active");
+			$(this).parents("li").addClass("active");
+		});
+
+		var list = {};
+		list.index = 0;
+		var _size = $(".jqzoom").attr("data-size") || 4;
+		list.df = _size;
+		list.size = $(".jqzoom-content-imgs li").size();
+
+		list.wdith = $(".jqzoom-content-imgs  li").outerWidth(true);
+		$(".jqzoom-content-imgs ").width(list.size * list.wdith);
+
+		$(".jqzoom-content").on("mouseenter", function () {
+
+			if (list.size > list.df) {
+
+				lr_btn_ff();
+			}
+		});
+
+		function lr_btn_ff() {
+
+			if (list.index === 0) {
+				$(".left-btn").hide();
+			} else {
+				$(".left-btn").show();
+			}
+
+			if (list.index + list.df >= list.size) {
+				$(".right-btn").hide();
+			} else {
+				$(".right-btn").show();
+			}
+		}
+		$(".jqzoom-content").on("mouseleave", function () {
+
+			$(this).find(".left-btn").hide();
+			$(this).find(".right-btn").hide();
+		});
+
+		$(".right-btn").click(function () {
+			if (list.index + list.df >= list.size) {
+				return;
+			}
+			list.index++;
+			$(".jqzoom-content-imgs").animate({
+
+				left: "-=" + list.wdith
+			}, 400);
+
+			lr_btn_ff();
+		});
+
+		$(".left-btn").click(function () {
+			if (list.index === 0) {
+				return;
+			}
+			list.index--;
+			$(".jqzoom-content-imgs").animate({
+
+				left: "+=" + list.wdith
+			}, 400);
+
+			lr_btn_ff();
+		});
+	};
+
+	return {
+		init: _init
 	};
 }(window.jQuery);
 /**延迟加载**/
@@ -741,7 +847,7 @@ var iframe = function ($) {
  * data-src="images/Home/板块图片1.png"
  * > 
  * */
-var lazy = function ($) {
+namespace.extend(rootObj, "api").lazy = function ($) {
 
 	var _init = function _init() {
 
@@ -814,7 +920,7 @@ var lazy = function ($) {
 		</aside>
 	 </body>
  */
-var scroll = function ($) {
+namespace.extend(rootObj, "api").scroll = function ($) {
 
 	var obj = {
 
@@ -956,7 +1062,7 @@ var el_select3 = document.getElementById("address_3");
 
  * */
 
-var threeAddress = function () {
+namespace.extend(rootObj, "api").threeAddress = function () {
 
 	var _init = function _init(v1, v2, v3) {
 		var el_select1 = document.getElementById("address_1");
@@ -1057,7 +1163,7 @@ var threeAddress = function () {
  * 
  * */
 
-var threeDate = function () {
+namespace.extend(rootObj, "api").threeDate = function () {
 
 	var _init = function _init() {
 
@@ -1214,6 +1320,223 @@ var threeDate = function () {
 		init: _init
 	};
 }();
+/*
+ 
+ 	<div class=" tree-address-big ">
+			<input class="form-control rd-no vd-item tree-address-btn" name="addr" vd-req vd-req-msg="所在地区不能为空" type="text" placeholder="输入所在地区" id="addr" />
+					<div class="tree-address tab-big">
+						<ul class="tree-address-ttl tab-ttl clearfix">
+							<li class="tab-item active" data-target=".address1">省</li>
+							<li class="tab-item" data-target=".address2">市</li>
+							<li class="tab-item" data-target=".address3">区</li>
+						</ul>
+						<div class="tab-content">
+						<ul class="tree-address-1 tab-content-item active clearfix address1">
+
+						</ul>
+						<ul class="tree-address-2 tab-content-item clearfix address2">
+
+						</ul>
+
+						<ul class="tree-address-3 tab-content-item clearfix address3">
+
+						</ul>
+				</div>
+
+			</div>
+	<span class="vd-req "></span>
+	</div>
+
+	   // 三联联动地址点击触发自定义事件
+      $(document).on("treeSelectAddress-select", function (event, el) {
+            alert(el.innerText)
+      });
+      
+ * */
+
+/*三联联动地址*/
+namespace.extend(rootObj, "api").treeSelectAddress = function () {
+
+	function _init() {
+
+		getProvince();
+
+		var listCity = [];
+		var result = "";
+		var result2 = "";
+		// 获取省
+		function getProvince() {
+
+			var province = $(".tree-address-1");
+			var list = cityData3; // 三联地址库
+			var docFragment = document.createDocumentFragment();
+
+			var patternObj = [{
+				key: "a-g",
+				val: /a|b|c|d|e|f|g/
+			}, {
+				key: "h-k",
+				val: /h|i|j|k/
+			}, {
+				key: "l-s",
+				val: /l|m|n|o|p|q|r|s/
+			}, {
+				key: "t-z",
+				val: /t|u|v|w|x|y|z/
+			}];
+
+			for (var i = 0; i < patternObj.length; i++) {
+				list2 = common.list.where(list, function (item) {
+					return item.py && item.py.search(new RegExp(patternObj[i].val)) >= 0;
+				});
+
+				var h4 = document.createElement("h4");
+				h4.innerText = patternObj[i].key.toUpperCase();
+				docFragment.appendChild(h4);
+				var ul = document.createElement("ul");
+				for (var index in list2) {
+					var li = document.createElement("li");
+					li.innerText = list2[index].text;
+					li.setAttribute("data-value", list2[index].value);
+					ul.appendChild(li);
+				}
+				docFragment.appendChild(ul);
+			}
+
+			province.append(docFragment);
+
+			$(".tree-address-1 li").click(function () {
+				result = "";
+				var p = $(this).parents(".tree-address-big");
+				var province = $(".tree-address-1", p);
+				var city = $(".tree-address-2", p);
+				var district = $(".tree-address-3", p);
+				city.html("");
+				district.html("");
+
+				$("li", province).removeClass("active");
+				$(this).addClass("active");
+				var value = $(this).attr("data-value");
+				var text = $(this).text();
+				result = text;
+
+				// 市
+				$(".tree-address-ttl .tab-item ", p).eq(1).trigger("click");
+
+				// 添加市区
+				getCity(value, city);
+			});
+		};
+
+		// 获取市
+		function getCity(val, city) {
+
+			var p = $(city).parents(".tree-address-big");
+			//var province=$(".tree-address-1",p);
+			var city = $(".tree-address-2", p);
+			var district = $(".tree-address-3", p);
+
+			var list = cityData3; // 三联地址库
+			val = typeof val === "string" ? val : "";
+			val = $.trim(val);
+			list2 = common.list.where(list, function (item) {
+				return item.value === val;
+			});
+
+			var list3 = list2 && list2[0] && list2[0].children;
+			listCity = list3;
+			docFragment = document.createDocumentFragment();
+			for (var index in list3) {
+				var li = document.createElement("li");
+				li.innerText = list3[index].text;
+				li.setAttribute("data-value", list3[index].value);
+				docFragment.appendChild(li);
+			}
+
+			city.append(docFragment);
+			//alert(JSON.stringify(list2));
+
+			$("li", city).click(function () {
+				$("li", city).removeClass("active");
+				$(this).addClass("active");
+				var value = $(this).attr("data-value");
+				var text = $(this).text();
+				result2 = result + "-" + text;
+				$(this).parents(".tree-address-big").find(".tree-address-btn").val(result2);
+
+				// 市
+				var p = $(this).parents(".tree-address");
+				$(".tree-address-ttl .tab-item", p).eq(2).click();
+
+				//点击触发自定义事件
+				$(this).trigger("treeSelectAddress-select", [this]);
+
+				// 添加区域
+				getDistrict(value, district);
+			});
+		};
+
+		// 获取区
+		function getDistrict(val, district) {
+
+			val = typeof val === "string" ? val : "";
+			val = $.trim(val);
+
+			$(district).html("");
+
+			var list2 = common.list.where(listCity, function (item) {
+				return item.value === val;
+			});
+
+			var list3 = list2 && list2[0] && list2[0].children;
+			docFragment = document.createDocumentFragment();
+			for (var index in list3) {
+				var li = document.createElement("li");
+				li.innerText = list3[index].text;
+				li.setAttribute("data-value", list3[index].value);
+				docFragment.appendChild(li);
+			}
+
+			district.append(docFragment);
+
+			$("li", district).click(function (event) {
+				event.stopPropagation();
+				$("li", district).removeClass("active");
+				$(this).addClass("active");
+				var value = $(this).attr("data-value");
+				var text = $(this).text();
+				var result3 = result2 + "-" + text;
+				result3 = result3.replace(/-$/, "");
+				$(this).parents(".tree-address-big").find(".tree-address-btn").val(result3);
+				$(this).parents(".tree-address-big").find(".tree-address").hide();
+
+				//点击触发自定义事件
+				$(this).trigger("treeSelectAddress-select", [this]);
+			});
+		};
+	}
+
+	$(function () {
+		// 地址焦点移开
+		$(".tree-address-btn").focus(function () {
+			$(this).blur();
+		});
+		// 点击显示
+		$(".tree-address-big").click(function (event) {
+			event.stopPropagation();
+			$(".tree-address-big").find(".tree-address").hide();
+			var treeAddress = $(this).find(".tree-address");
+			treeAddress.show();
+			$(document).one("click", function () {
+				treeAddress.hide();
+			});
+		});
+	});
+
+	return {
+		init: _init
+	};
+}();
 
 
 /*check按钮组件
@@ -1263,7 +1586,323 @@ var threeDate = function () {
 		}
 	});
 }(window.jQuery || window.Zepto);
+/*
+ * 消息框
+  
+ 	1.confirm 确认框
+  
+  <div class="message">
+			<div class="message-mask"></div>
+			<div class="confirm-box">
+				<h4 class="ttl">
+				是否要确认删除数据?
+			</h4>
+				<button class="ok confirm-btn" type="button">确认</button>
+				<button class="cancel confirm-btn" type="button">取消</button>
+			</div>
+	</div>
+	
+	// js
+	$(function() {
+		$("#btn").click(function() {
+			$(this).confirm("", function() {
+			console.log(this)
+			},function(){})
+		});
 
+	});
+	
+	
+	2.alert 
+ 	<div class="message">
+			<div class="message-mask"></div>
+			<div class="alertt-box">
+				<h4 class="ttl alert">
+				没有选择数据!
+			</h4>
+				<button class="ok message-box-btn alert" type="button">确认</button>
+				
+			</div>
+	</div>
+	
+	// js
+	$(function() {
+		$("#btn").click(function() {
+			$(this).alert("没有选择数据!");
+
+	});
+ * */
+
+(function () {
+
+	//  confirm
+	jQuery.fn.extend({
+
+		confirm: function confirm(mess, okfun, cancelfun, obj) {
+			if (!arguments.length >= 2) {
+
+				throw new Error("property is must two");
+			}
+			obj = obj || {};
+			var _okText = obj.ok || "确认";
+			var _cancelText = obj.cancel || "取消";
+
+			this.each(function (i, v) {
+
+				mess = mess || "是否确认删除数据?";
+				$(".message").remove();
+
+				// 创建message
+				var message = document.createElement("div");
+				message.setAttribute("class", "message");
+				var message_mask = document.createElement("div");
+				message_mask.setAttribute("class", "message-mask");
+
+				var message_box = document.createElement("div");
+				message_box.setAttribute("class", "confirm-box");
+
+				var ttl = document.createElement("h4");
+				ttl.setAttribute("class", "ttl");
+				ttl.innerText = mess;
+
+				var ok_btn = document.createElement("button");
+				ok_btn.setAttribute("type", "button");
+				ok_btn.setAttribute("class", "ok confirm-btn");
+				ok_btn.innerText = _okText;
+
+				var cancel_btn = document.createElement("button");
+				cancel_btn.setAttribute("type", "button");
+				cancel_btn.setAttribute("class", "cancel confirm-btn");
+				cancel_btn.innerText = _cancelText;
+
+				message_box.appendChild(ttl);
+				message_box.appendChild(ok_btn);
+				message_box.appendChild(cancel_btn);
+				message.appendChild(message_mask);
+				message.appendChild(message_box);
+
+				var elm = document.body || document.documentElement;
+				elm.appendChild(message);
+
+				$(".message").fadeIn();
+				$(".message").on("click", ".confirm-btn.ok", function (e) {
+
+					if (typeof okfun === "function") {
+						$(".message").remove();
+						okfun.call(v);
+					}
+				});
+
+				$(".message").on("click", ".confirm-btn.cancel", function (e) {
+
+					if (typeof cancelfun === "function") {
+
+						cancelfun.call(v);
+					}
+					$(".message").remove();
+				});
+			});
+		}
+
+	});
+
+	//  confirm
+	jQuery.extend({
+		confirm: function confirm(mess, okfun, cancelfun, obj) {
+			if (!arguments.length >= 2) {
+
+				throw new Error("property is must two");
+			}
+			obj = obj || {};
+			var _okText = obj.ok || "确认";
+			var _cancelText = obj.cancel || "取消";
+
+			mess = mess || "是否确认删除数据?";
+			$(".message").remove();
+
+			// 创建message
+			var message = document.createElement("div");
+			message.setAttribute("class", "message");
+			var message_mask = document.createElement("div");
+			message_mask.setAttribute("class", "message-mask");
+
+			var message_box = document.createElement("div");
+			message_box.setAttribute("class", "confirm-box");
+
+			var ttl = document.createElement("h4");
+			ttl.setAttribute("class", "ttl");
+			ttl.innerText = mess;
+
+			var ok_btn = document.createElement("button");
+			ok_btn.setAttribute("type", "button");
+			ok_btn.setAttribute("class", "ok confirm-btn");
+			ok_btn.innerText = _okText;
+
+			var cancel_btn = document.createElement("button");
+			cancel_btn.setAttribute("type", "button");
+			cancel_btn.setAttribute("class", "cancel confirm-btn");
+			cancel_btn.innerText = _cancelText;
+
+			message_box.appendChild(ttl);
+			message_box.appendChild(ok_btn);
+			message_box.appendChild(cancel_btn);
+			message.appendChild(message_mask);
+			message.appendChild(message_box);
+
+			var elm = document.body || document.documentElement;
+			elm.appendChild(message);
+
+			$(".message").fadeIn();
+			$(".message").on("click", ".confirm-btn.ok", function (e) {
+
+				if (typeof okfun === "function") {
+					$(".message").remove();
+					okfun();
+				}
+			});
+
+			$(".message").on("click", ".confirm-btn.cancel", function (e) {
+
+				if (typeof cancelfun === "function") {
+					cancelfun();
+				}
+				$(".message").remove();
+			});
+		}
+
+	});
+
+	//  alert
+	jQuery.fn.extend({
+
+		alert: _alert
+	});
+
+	//  alert
+	jQuery.extend({
+
+		alert: _alert
+	});
+
+	function _alert(mess, obj) {
+
+		obj = obj || {};
+		var _okText = obj.ok || "确定";
+
+		mess = mess || "没有选择数据！";
+		$(".message").remove();
+
+		// 创建message
+		var message = document.createElement("div");
+		message.setAttribute("class", "message");
+		var message_mask = document.createElement("div");
+		message_mask.setAttribute("class", "message-mask");
+
+		var message_box = document.createElement("div");
+		message_box.setAttribute("class", "alert-box");
+
+		var ttl = document.createElement("h4");
+		ttl.setAttribute("class", "ttl");
+		ttl.innerText = mess;
+
+		var ok_btn = document.createElement("button");
+		ok_btn.setAttribute("type", "button");
+		ok_btn.setAttribute("class", "ok alert-btn");
+		ok_btn.innerText = _okText;
+
+		message_box.appendChild(ttl);
+		message_box.appendChild(ok_btn);
+		message.appendChild(message_mask);
+		message.appendChild(message_box);
+
+		var elm = document.body || document.documentElement;
+		elm.appendChild(message);
+
+		$(".message").fadeIn();
+		$(".message").on("click", ".alert-btn.ok", function (e) {
+			$(".message").remove();
+		});
+	}
+
+	//  info
+	jQuery.fn.extend({
+		info: _info
+	});
+
+	//  info
+	jQuery.extend({
+		info: _info
+	});
+
+	function _info(mess, type) {
+
+		mess = mess || "信息提示框";
+		$(".messageinfo").remove();
+		var _class = "default";
+		if (typeof type === "number") {
+			switch (type) {
+				case 0:
+					_class = "default";
+					break;
+				case 1:
+					_class = "success";
+					break;
+				case 2:
+					_class = "warning";
+					break;
+				case 3:
+					_class = "danger";
+					break;
+				default:
+					_class = "default";
+			}
+		} else if (typeof type === "string") {
+			switch (type) {
+				case "default":
+					_class = "default";
+					break;
+				case "success":
+					_class = "success";
+					break;
+				case "warning":
+					_class = "warning";
+					break;
+				case "danger":
+					_class = "danger";
+					break;
+				default:
+					_class = "default";
+			}
+		}
+
+		// 创建message
+		var message = document.createElement("div");
+		message.setAttribute("class", "messageinfo");
+
+		var message_box = document.createElement("div");
+		message_box.setAttribute("class", "info-box");
+
+		var ttl = document.createElement("h4");
+		ttl.setAttribute("class", "ttl " + _class);
+		ttl.innerText = mess;
+
+		message_box.appendChild(ttl);
+		message.appendChild(message_box);
+
+		var elm = document.body || document.documentElement;
+		elm.appendChild(message);
+
+		$(".messageinfo").fadeIn(600);
+		var setTimeoutId = setTimeout(function () {
+			$(".messageinfo").fadeOut().queue(function () {
+				$(".messageinfo").remove();
+				clearTimeout(setTimeoutId);
+			});
+
+			//alert()
+		}, 1500);
+	}
+})();
 /*
   
 <div class="number" >
@@ -1401,7 +2040,7 @@ var threeDate = function () {
 
 +function ($) {
 
-  $(".radio-btn-item").on("tap", function () {
+  $(".radio-btn-item").on("click", function () {
     var p = $(this).parents(".radio-btn");
     $(".radio-btn-item", p).removeClass("active");
     $(this).addClass("active");
@@ -1458,7 +2097,7 @@ var threeDate = function () {
 +function ($) {
 
   // 选项卡tag-box tap 新的
-  $(".tab-big .tab-ttl .tab-item").on("tap", function (e) {
+  $(".tab-big .tab-ttl .tab-item").on("click", function (e) {
 
     e.preventDefault();
     var p = $(this).parents(".tab-big");
@@ -1470,142 +2109,12 @@ var threeDate = function () {
     $(".tab-content", p).find(target).addClass("active");
 
     // 点击触发自定义事件 
-    $(this).trigger("tab_select");
+    $(this).trigger("tab_select", [this]);
   });
 }(window.jQuery || window.Zepto);
-/**
- * 
- * 缩略图
- * 
- * <div class=" clearfix  thumbnail-slider">
-		<!--btn-->
-		<div class="pull-left   ">
-			<span class="glyphicon glyphicon-menu-left  thumbnail-btn-l"></span>
-		</div>
-		<div class=" pull-left thumbnail-content ">
-
-			<div class="thumbnail-allitems">
-
-				<ul class=" thumbnail-item">
-					<li class="clearfix">
-						<a href="javascript:">
-							<img src="images/youhui-1.png" alt="优选好货 图片 160*160" />
-							<div class="caption">
-								<p>
-									Nutrilon诺优能 幼儿配方奶粉 3段 12-36月个月800克/罐
-								</p>
-
-								<div class="price">
-									<span class=" iconfont  renminbi "></span>
-									<span>150</span>
-								</div>
-							</div>
-						</a>
-					</li>
-
-				</ul>
-	
-			</div>
-			
-			<div class="thumbnail-num">
-				<span class="l">1</span>
-				<span>/</span>
-				<span class="r">4</span>
-				
-			</div>
-
-		</div>
-		<div class="pull-left">
-			<span class="glyphicon glyphicon-menu-right thumbnail-btn-r"></span>
-		</div>
-	</div>
-
- * **/
-
-+function ($) {
-
-	//
-	//	$.fn.thumbnail=function(){
-	//			
-	//			var $content= $(this).find(".thumbnail-content");
-	//			var $allitems= $(this).find(".thumbnail-allitems");
-	//			var $btn_l= $(this).find(".thumbnail-btn-l");
-	//			var $btn_r= $(this).find(".thumbnail-btn-r");
-	//			var $item= $(this).find(".thumbnail-item");
-	//			var $num= $(this).find(".thumbnail-num");
-	//			var $num_r=$num.find(".r");
-	//			var $num_l=$num.find(".l");
-	//			
-	//		
-	//			var size= parseInt($item.length);
-	//			var width= parseInt($item.outerWidth(true));
-	//			var index=0;
-	//			$num_r.text(size);
-	//			$num_l.text(1);
-	//			
-	//			// 设置width
-	//			$allitems.width(size*width);
-	//				
-	//			 $btn_r.click(function(){
-	//			 	index=index>=0&&index<size-1?++index:size-1;
-	//			 	
-	//			 	$allitems.animate({left:-index*width},400)
-	//			 	$num_l.text(index+1);
-	//			 })
-	//			 
-	//			  $btn_l.click(function(){
-	//			 	index=index>0&&index<size?--index:0;
-	//			 	$num_l.text(index+1);
-	//			 	$allitems.animate({left:-index*width},400)
-	//			 	
-	//			 })
-	//				
-	//			return this;
-	//			
-	//			
-	//		}
-	//		
-	//	
-	//	
 
 
-	$(".thumbnail-slider").each(function () {
+namespace.extend(rootObj, "page").index = function () {
 
-		var $content = $(this).find(".thumbnail-content");
-		var $allitems = $(this).find(".thumbnail-allitems");
-		var $btn_l = $(this).find(".thumbnail-btn-l");
-		var $btn_r = $(this).find(".thumbnail-btn-r");
-		var $item = $(this).find(".thumbnail-item");
-		var $num = $(this).find(".thumbnail-num");
-		var $num_r = $num.find(".r");
-		var $num_l = $num.find(".l");
-
-		var size = parseInt($item.length);
-		var width = parseInt($item.outerWidth(true));
-		var index = 0;
-		$num_r.text(size);
-		var curIndex = size <= 0 ? 0 : 1;
-		$num_l.text(curIndex);
-		if (size <= 0) {
-			$num.hide();
-			$btn_l.hide();
-			$btn_r.hide();
-		}
-		// 设置width
-		$allitems.width(size * width);
-
-		$btn_r.click(function () {
-			index = index >= 0 && index < size - 1 ? ++index : size - 1;
-
-			$allitems.animate({ left: -index * width }, 400);
-			$num_l.text(index + 1);
-		});
-
-		$btn_l.click(function () {
-			index = index > 0 && index < size ? --index : 0;
-			$num_l.text(index + 1);
-			$allitems.animate({ left: -index * width }, 400);
-		});
-	});
-}(window.jQuery || window.Zepto);
-/*es6*/
+	return {};
+}();

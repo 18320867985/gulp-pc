@@ -114,6 +114,7 @@
 		}
 	});
 
+
 	/**array的扩展方法**/
 	Common.extend({
 		list: {

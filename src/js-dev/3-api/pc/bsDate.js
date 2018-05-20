@@ -5,10 +5,7 @@
  * 
  */
 
-
-
-var bsDate = (function($) {
- 
+namespace.extend(rootObj, "api").bsDate = (function($) {
 
 	var _init = function() {
 		// bs 日历插件
@@ -34,6 +31,5 @@ var bsDate = (function($) {
 	return {
 		init: _init
 	}
-
 
 })(window.jQuery);

@@ -35,7 +35,7 @@
 
 
 /*三联联动地址*/
-var treeSelectAddress = (function () {
+namespace.extend(rootObj, "api").treeSelectAddress = (function () {
    
 	function _init() {
 	

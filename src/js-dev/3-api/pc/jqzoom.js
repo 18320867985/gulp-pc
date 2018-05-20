@@ -28,7 +28,7 @@
  * 
  * */
 
-var  jqzoom = (function($) {
+namespace.extend(rootObj, "api").jqzoom = (function($) {
 	
 	var _init = function() {
 	

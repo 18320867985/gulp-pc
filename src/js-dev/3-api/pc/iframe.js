@@ -2,7 +2,7 @@
  * iframe
  * **/
 
-var iframe = (function($) {
+namespace.extend(rootObj, "api").iframe = (function($) {
 	
 	// 设置iframe 高度
 	var _setHeight = function() {

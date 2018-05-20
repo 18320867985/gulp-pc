@@ -23,7 +23,7 @@
  * 
  * */
 
-var threeDate = (function() {
+namespace.extend(rootObj, "api").threeDate = (function() {
 
 	var _init = function() {
 
