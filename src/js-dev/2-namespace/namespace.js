@@ -18,3 +18,5 @@
 
 		return parent;
 	}
+	
+/*namespace.extend(rootObj, "api").bsDate=()(function(){})*/
