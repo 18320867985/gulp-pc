@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.draggale {
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				z-index: 999;
+				height: 400px;
+				width: 400px;
+				margin-left: -200px;
+				margin-top: -200px;
+				background: #ddd;
+			}
+			
+			.draggale-ttl {
+				position: static;
+				margin: 0;
+				height: 40px;
+				line-height: 40px;
+				padding-left: 20px;
+				background: #ccc;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="draggale">
+			<h4 class="draggale-ttl">handle</h4>
+			<div class="content3">
+
+			</div>
+			<div class="content2">
+
+			</div>
+			<div class="content">
+
+
+	<!--	<script src="js/mobile-1.0.0.js" type="text/javascript" charset="utf-8"></script>-->
+		<script src="js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			//  draggale
+			+(function($) {
+
+				//  draggale
+				$.fn.extend({
+					draggale: function(option) {
+						option = option || {};
+						option.handle = option.handle || this;
+						$box = this;
+						$(option.handle).on("mousedown", function(event) {
+							event.preventDefault();
+							event.stopPropagation();
+							$this = this;
+							$this.bl = false;
+							if(!$this.bl) {
+								this.bl = true;
+								var _offset_top = parseInt($($box).offset().top);
+								var _offset_left = parseInt($($box).offset().left);
+								var _w = parseInt($($box).outerWidth());
+								var _h = parseInt($($box).outerHeight());
+								var _window_w = parseInt($(window).width());
+								var _window_h = parseInt($(window).height());
+								var _space_left = event.clientX - _offset_left;
+								var _space_top = event.clientY - _offset_top;
+								$($this).css("cursor", "move");
+								
+								$(document).on("mousemove", function(event2) {
+								
+									var _left = event2.clientX - _space_left;
+									var _top = event2.clientY - _space_top;
+
+									// 左边
+									_left = _left <= 0 ? 0 : _left;
+									_left = _left >= _window_w - _w ? _window_w - _w : _left;
+
+									// 上边
+									_top = _top <= 0 ? 0 : _top;
+									_top = _top >= _window_h - _h ? _window_h - _h : _top;
+									$($box).css({
+										left: _left,
+										top: _top,
+										margin: 0
+									})
+
+								});
+
+								$(document).on("mouseup", function(event) {
+									$(document).off("mousemove");
+									$(document).off("mouseup");
+									$this.bl = false;
+									$($this).css("cursor", "default");
+									
+								});
+
+							}
+
+						});
+
+						$(window).resize(function() {
+				
+							var _offset_top = parseInt($($box).offset().top);
+							var _offset_left = parseInt($($box).offset().left);
+							var _w = parseInt($($box).outerWidth());
+							var _h = parseInt($($box).outerHeight());
+							var _window_w = parseInt($(window).width());
+							var _window_h = parseInt($(window).height());
+							var _left =(_offset_left+_w)>=_window_w?_window_w-_w:_offset_left;
+							var _top = (_offset_top+_h)>=_window_h?_window_h-_h:_offset_top;
+							if(_offset_left<=0){
+								_left=0;
+							}
+							if(_offset_top<=0){
+								_top=0;
+							}
+							$($box).css({
+								left: _left,
+								top: _top,
+								margin: 0
+							})
+
+						});
+					}
+
+				});
+
+			})(window.jQuery);
+
+
+			$(".draggale").draggale({
+				handle: ".draggale-ttl"
+			});
+			
+			
+			
+			
+		</script>
+	</body>
+
+</html>
