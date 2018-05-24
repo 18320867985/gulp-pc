@@ -19,4 +19,4 @@
 		return parent;
 	}
 	
-/*namespace.extend(rootObj, "api").bsDate=()(function(){})*/
+/*namespace.extend(rootObj, "api").bsDate=(function(){})()*/
