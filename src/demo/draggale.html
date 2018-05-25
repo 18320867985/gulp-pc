@@ -32,7 +32,7 @@
 		<div class="draggale">
 			<h4 class="draggale-ttl">handle</h4>
 			<div class="content3">
-
+234234
 			</div>
 			<div class="content2">
 
@@ -40,8 +40,8 @@
 			<div class="content">
 
 
-	<!--	<script src="js/mobile-1.0.0.js" type="text/javascript" charset="utf-8"></script>-->
-		<script src="js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/mobile-1.0.0.js" type="text/javascript" charset="utf-8"></script>
+	<!--	<script src="js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>-->
 		<script type="text/javascript">
 			//  draggale
 			+(function($) {
@@ -128,7 +128,7 @@
 
 				});
 
-			})(window.jQuery);
+			})(window.$);
 
 
 			$(".draggale").draggale({
@@ -136,7 +136,18 @@
 			});
 			
 			
+			$(".content3").click(ff);
 			
+			function ff(){
+				alert("ok")
+			}
+			
+			$(".content3").click(ff2);
+			
+			function ff2(){
+				alert("ok2")
+			}
+			$(".content3").off("click");
 			
 		</script>
 	</body>
