@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 	<head>
@@ -11,11 +11,12 @@
 			<script src="../js/html5shiv.js" type="text/javascript" charset="utf-8"></script>
 			<script src="../js/respond.min.js" type="text/javascript" charset="utf-8"></script>
 		<![endif]-->
-
+		<link rel="stylesheet" type="text/css" href="../css/all.css" />
 		<style type="text/css">
 			@charset "utf-8";
 			body {
 				padding: 10px;
+				background: #fafafa;
 			}
 			
 			* {
@@ -30,45 +31,263 @@
 			img {
 				display: inline-block;
 			}
-			/*nav*/
 			
-			.nav {
-				box-sizing: border-box;
+			.contailer {
+				width: 1200px;
+				margin: 0 auto;
+			}
+			
+			.item {
+				background: #fff;
+			}
+			
+			html,
+			body {
+				/*/background: url(../demo/images/1.jpg) no-repeat;*/
+				background-size: cover;
+				background-attachment: fixed;
+			}
+			
+			.bg {
 				width: 1000px;
-				border: 1px solid #ddd;
-				overflow: hidden;
+				height: 600px;
+				margin: 0 auto;
+				padding: 150px;
+				border: 50px orangered dotted;
+				background: #ccc;
+				background: url(../demo/images/2.jpg) no-repeat;
+				background-size: cover;
+				background-origin: content-box;
+				background-clip: content-box;
+				text-overflow: ;
 			}
 			
-			.nav-wrap ul {
-				white-space: nowrap;
-				background: red;
+			.imgs {
+				display: block;
+				zoom: 1;
+				width: 1000px;
+				border: 1px solid red;
 				overflow: hidden;
+				font-size: 0;
+				line-height: 0;
 			}
 			
-			.nav-wrap ul li {
-				display: inline-block;
+			.imgs img {
+				width: 200px;
+				height: 200px;
+			}
+			
+			#input {
 				padding: 10px;
-				float: none;
+				border: 1px solid red;
 			}
+			
+			#input input {
+				width: 200px;
+				height: 34px;
+				padding: 6px 8px;
+				vertical-align: middle;
+			}
+			
+			html {
+				scrollbar-3dlight-color: #999;
+				scrollbar-darkshadow-color: #999;
+				scrollbar-highlight-color: #fff;
+				scrollbar-shadow-color: #eee;
+				scrollbar-arrow-color: #000;
+				scrollbar-face-color: #ddd;
+				scrollbar-track-color: #eee;
+				scrollbar-base-color: #ddd;
+				filter: alpha(opcity)
+			}
+			
+			.hoverdh {
+				width: 60px;
+				height: 80px;
+				background: orange;
+				box-shadow: 1px 1px 2px #ccc, -1px -1px 2px #ccc;
+				cursor: pointer;
+			}
+			
+			.hoverdh:hover {
+				animation: dh .4s;
+			}
+			
+			@keyframes dh {
+				25% {
+					transform: skew(-20deg);
+				}
+				50% {
+					transform: skew(0deg);
+				}
+				75% {
+					transform: skew(-10deg);
+				}
+				100% {
+					transform: skew(0deg);
+				}
+			}
+
+            @keyframes hd {
+                20% {
+                    
+                }
+            }
 		</style>
 
 	</head>
 
 	<body>
 
-		<div class="nav" id="nav">
-			<div class="nav-wrap">
-				<ul>
+		<div class="hoverdh">
+			hover
+		</div>
 
-					<li class="a b" style="color:blue">2</li>
-					<li style="color:red">1</li>
-					<li>3</li>
-					<li>1</li>
-
-				</ul>
+		<div class="contailer test">
+			<div class="item">
+				<img src="../demo/images/0.jpg" alt="" />
+				<div class="img-mask"></div>
+				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
+				<div class="find-sd">
+					<span>找相似</span>
+				</div>
 
 			</div>
-		</div>
+			<div class="item">
+				<img src="../demo/images/0.jpg" alt="" />
+				<div class="img-mask"></div>
+				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
+				<div class="find-sd">
+					<span>找相似</span>
+				</div>
+
+			</div>
+			<div class="item">
+				<img src="../demo/images/0.jpg" alt="" />
+				<div class="img-mask"></div>
+				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
+				<div class="find-sd">
+					<span>找相似</span>
+				</div>
+
+			</div>
+			<div class="item">
+				<img src="../demo/images/0.jpg" alt="" />
+				<div class="img-mask"></div>
+				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
+				<div class="find-sd">
+					<span>找相似</span>
+				</div>
+
+			</div>
+			<div class="item">
+				<img src="../demo/images/0.jpg" alt="" />
+				<div class="img-mask"></div>
+				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
+				<div class="find-sd">
+					<span>找相似</span>
+				</div>
+
+			</div>
+			<div class="item">
+				<img src="../demo/images/0.jpg" alt="" />
+				<div class="img-mask"></div>
+				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
+				<div class="find-sd">
+					<span>找相似</span>
+				</div>
+
+			</div>
+			<div class="item">
+				<img src="../demo/images/0.jpg" alt="" />
+				<div class="img-mask"></div>
+				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
+				<div class="find-sd">
+					<span>找相似</span>
+				</div>
+
+			</div>
+			<div class="item">
+				<img src="../demo/images/0.jpg" alt="" />
+				<div class="img-mask"></div>
+				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
+				<div class="find-sd">
+					<span>找相似</span>
+				</div>
+
+			</div>
+			<div class="item">
+				<img src="../demo/images/0.jpg" alt="" />
+				<div class="img-mask"></div>
+				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
+				<div class="find-sd">
+					<span>找相似</span>
+				</div>
+
+			</div>
+			<div class="item">
+				<img src="../demo/images/0.jpg" alt="" />
+				<div class="img-mask"></div>
+				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
+				<div class="find-sd">
+					<span>找相似</span>
+				</div>
+
+			</div>
+			<div class="item">
+				<img src="../demo/images/0.jpg" alt="" />
+				<div class="img-mask"></div>
+				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
+				<div class="find-sd">
+					<span>找相似</span>
+				</div>
+
+			</div>
+			<div class="item">
+				<img src="../demo/images/0.jpg" alt="" />
+				<div class="img-mask"></div>
+				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
+				<div class="find-sd">
+					<span>找相似</span>
+				</div>
+
+			</div>
+			<div class="item">
+				<img src="../demo/images/0.jpg" alt="" />
+				<div class="img-mask"></div>
+				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
+				<div class="find-sd">
+					<span>找相似</span>
+				</div>
+
+			</div>
+			<div class="item">
+				<img src="../demo/images/0.jpg" alt="" />
+				<div class="img-mask"></div>
+				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
+				<div class="find-sd">
+					<span>找相似</span>
+				</div>
+
+			</div>
+			<div class="item">
+				<img src="../demo/images/0.jpg" alt="" />
+				<div class="img-mask"></div>
+				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
+				<div class="find-sd">
+					<span>找相似</span>
+				</div>
+
+			</div>
+			<div class="item">
+				<img src="../demo/images/0.jpg" alt="" />
+				<div class="img-mask"></div>
+				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
+				<div class="find-sd">
+					<span>找相似</span>
+				</div>
+
+			</div>
 
 		</div>
 
@@ -76,29 +295,6 @@
 		<script src="../js/all.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			"use strict";
-			var rootName = "hqs"; // 顶级命名空间
-	var rootObj = window[rootName] = {};
-
-	var namespace = {}; // 
-	namespace.extend = function(ns, nsString) {
-		if(typeof nsString !== "string") {
-			throw new Error("nsString must string type");
-		}
-		var parent = ns;
-		var arrs = nsString.split(".");
-		for(var i = 0; i < arrs.length; i++) {
-			var prop = arrs[i];
-			if(typeof ns[prop] === "undefined") {
-				parent[prop] = {};
-			}
-			parent = parent[prop];
-		}
-
-		return parent;
-	}
-	var o={};
-
-			
 		</script>
 
 	</body>
