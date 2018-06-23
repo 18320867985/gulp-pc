@@ -121,6 +121,7 @@
 				background: #999;
 				border-radius: 50%;
 				transition: .6s;
+				cursor: pointer;
 			}
 			
 			.banner-slide .radius-list span.active {
@@ -171,6 +172,7 @@
 				color: #f8f8f8;
 				font-size: 20px;
 				height: 30px;
+				
 			}
 		</style>
 
@@ -241,7 +243,6 @@
 					<span class="active"></span>
 					<span></span>
 					<span></span>
-
 				</div>
 
 			</div>
@@ -332,7 +333,7 @@
 
 						});
 						var seltid = 0;
-						$(".radius-list span", $(obj)).mouseenter(function() {
+						$(".radius-list span", $(obj)).on("click",function() {
 
 							if(obj.isclick) {
 								obj.isclick = false;
