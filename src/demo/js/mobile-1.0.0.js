@@ -7,11 +7,12 @@
 	"use strict"
 	// 冲突Mobile兼容
 	var _mobile = window.mobile = window.m;
-	var _$=window.$;
+	var _$ = window.$;
 
 	/*创建mobile对象*/
-	var Mobile =window.$=window.m = window.mobile = function(selector, content) {
-		Mobile.ready(selector);
+	var Mobile = window.$ = window.m = window.mobile = function(selector, content) {
+		
+		if(typeof selector ==="function"&&arguments.length===1){Mobile.ready(selector); return;};
 		return new Mobile.fn.init(selector, content);
 	};
 
@@ -66,7 +67,6 @@
 
 	}
 
-	
 	// prototype
 	Mobile.fn = Mobile.prototype = {
 
@@ -185,16 +185,13 @@
 							_css = parseFloat(_css) || 0;
 						}
 					}
-
 					// ie8
-					/*
 					else if(v.currentStyle) {
-						alert("ooo")
 						_css = v.currentStyle[attr];
 					} else {
 						_css = v.style[attr];
 					}
-					*/
+
 					return false;
 
 				});
@@ -206,7 +203,7 @@
 
 				Mobile.each(this, function() {
 					if(Mobile.isEqual(Mobile.numberList, attr.trim())) {
-						this.style[attr.trim()] = parseFloat(value) ? parseFloat(value).toString() + "px" : value;
+						this.style[attr.trim()] = Number(value) ? Number(value).toString() + "px" : value;
 					} else {
 						this.style[attr.trim()] = value;
 					}
@@ -219,7 +216,12 @@
 			if(arguments.length === 1 && typeof attr === "object") {
 				Mobile.each(this, function(i, v) {
 					for(var _attr in attr) {
-						this.style[_attr] = attr[_attr];
+						if(Mobile.isEqual(Mobile.numberList, _attr.trim())) {
+							this.style[_attr] = Number(attr[_attr]) ? Number(attr[_attr]).toString() + "px" : attr[_attr];
+						} else {
+							this.style[_attr] = attr[_attr];
+						}
+
 					}
 				});
 
@@ -258,6 +260,26 @@
 			if(arguments.length === 1) {
 				Mobile.each(this, function() {
 					this.innerText = value;
+				});
+			}
+			return this;
+		},
+
+		// val
+		val: function(value) {
+
+			//set 对象的值
+			var _val = "";
+			if(arguments.length === 0) {
+				Mobile.each(this, function() {
+					_val += this.value;
+
+				});
+				return _val;
+			}
+			if(arguments.length === 1) {
+				Mobile.each(this, function() {
+					this.value = value;
 				});
 			}
 			return this;
@@ -513,9 +535,10 @@
 				Mobile.each(this, function(i, v) {
 
 					// window
-					if(this.constructor === Window) {
+
+					if(this === window) {
 						_h = window.innerHeight || window.document.documentElement.clientHeight || window.document.body.clientHeight;
-					} else if(this.constructor === HTMLDocument) {
+					} else if(this === document) {
 						_h = m(document.documentElement).css("height"); //document.documentElement.offsetHeight;
 					} else {
 						_h = m(this).css("height");
@@ -539,6 +562,78 @@
 			return this;
 		},
 
+		//  outerHeight
+		outerHeight: function() {
+
+			if(arguments.length === 0) {
+				var _h = 0;
+				Mobile.each(this, function(i, v) {
+
+					// window
+
+					if(this === window) {
+						_h = window.innerHeight || window.document.documentElement.clientHeight || window.document.body.clientHeight;
+					} else if(this === document) {
+						_h = m(document.documentElement).eq(0) && m(document.documentElement).eq(0)[0].offsetHeight; //document.documentElement.offsetHeight;
+					} else {
+						_h = m(this).eq(0) && m(this).eq(0)[0].offsetHeight;
+					}
+					_h = parseFloat(_h);
+
+					return false;
+
+				});
+				return _h;
+			}
+
+			// set
+			else if(arguments.length === 1) {
+				var _value = arguments[0]
+				Mobile.each(this, function() {
+					m(this).css("height", _value);
+
+				});
+			}
+			return this;
+		},
+
+		//  outWidth
+		outerWidth: function() {
+
+			if(arguments.length === 0) {
+				var _w = 0;
+				Mobile.each(this, function() {
+
+					// window
+					if(this === window) {
+						_w = window.innerWidth || window.document.documentElement.clientWidth || window.document.body.clientWidth;
+					} else if(this === document) {
+						_w = m(document.documentElement).eq(0) && m(document.documentElement).eq(0)[0].offsetWidth; //document.documentElement.offsetWidth;
+
+					} else {
+						_w = m(this).eq(0) && m(this).eq(0)[0].offsetWidth;
+
+					}
+					_w = parseFloat(_w);
+					return false;
+
+				});
+
+				return _w;
+
+			}
+
+			// set
+			else if(arguments.length === 1) {
+				var _value = arguments[0]
+				Mobile.each(this, function() {
+					m(this).css("width", _value);
+
+				});
+			}
+
+			return this;
+		},
 		//  width
 		width: function() {
 
@@ -548,9 +643,10 @@
 				Mobile.each(this, function() {
 
 					// window
-					if(this.constructor === Window) {
+					if(this === window) {
+
 						_w = window.innerWidth || window.document.documentElement.clientWidth || window.document.body.clientWidth;
-					} else if(this.constructor === HTMLDocument) {
+					} else if(this === document) {
 						_w = m(document.documentElement).css("width"); //document.documentElement.offsetWidth;
 
 					} else {
@@ -560,6 +656,7 @@
 					return false;
 
 				});
+
 				return _w;
 
 			}
@@ -577,24 +674,24 @@
 		},
 
 		// clientTop   目前高级浏览器支持都不一样   以后版本全部支持
-		//		clientTop: function() {
-		//			var _top = 0;
-		//			Mobile.each(this, function() {
-		//				_top = this.getBoundingClientRect().top;
-		//				return false;
-		//			});
-		//			return _top;
-		//		},
-		//
-		//		// clientLeft 目前高级浏览器支持都不一样   以后版本全部支持
-		//		clientLeft: function() {
-		//			var _left = 0;
-		//			Mobile.each(this, function() {
-		//				_left = this.getBoundingClientRect().left;
-		//				return false;
-		//			});
-		//			return _left;
-		//		},
+		clientTop: function() {
+			var _top = 0;
+			Mobile.each(this, function() {
+				_top = this.getBoundingClientRect().top;
+				return false;
+			});
+			return _top;
+		},
+
+		// clientLeft 目前高级浏览器支持都不一样   以后版本全部支持
+		clientLeft: function() {
+			var _left = 0;
+			Mobile.each(this, function() {
+				_left = this.getBoundingClientRect().left;
+				return false;
+			});
+			return _left;
+		},
 
 		// offsetTop
 		offsetTop: function() {
@@ -614,6 +711,17 @@
 
 			});
 			return _left;
+		},
+
+		// offset
+		offset: function() {
+			var obj = {};
+			Mobile.each(this, function() {
+				obj.left = this.offsetLeft;
+				obj.top = this.offsetTop;
+
+			});
+			return obj;
 		},
 
 		// index
@@ -651,7 +759,7 @@
 			Mobile.each(this, function(i, v) {
 				if(v.parentElement) {
 					var els = this.parentElement;
-					_indexObj = els.removeChild(this);
+					var _indexObj = els.removeChild(this);
 					arr.push(_indexObj);
 				}
 				delete $this[i]
@@ -849,8 +957,8 @@
 			return this;
 		},
 
-		//  scrollTop
-		scrollTop: function(y, time) {
+		//  windowTop
+		windowTop: function(y, time) {
 
 			// get
 			if(arguments.length === 0) {
@@ -859,48 +967,81 @@
 
 			// set
 			time = typeof time === "number" ? time : 400;
-			y = typeof y === "number" ? y : 0;
+			y = typeof y === "number" ? y : parseFloat(y);
+			y = isNaN(y) ? 0 : y;
 			var fx = 20;
 			var speed = 20;
 			Mobile.each(this, function() {
 				this.clearTimeId = this.clearTimeId || 0;
-				clearInterval(this.clearTimeId)
-				if(this.constructor === Window) {
-					var speed1 = time / fx;
-					var windowStartTop = parseFloat(window.pageYOffset) || 0;
-					var speed2 = Math.abs(windowStartTop - y);
-					speed = speed2 / speed1;
-
-					if(windowStartTop > y) {
-						this.clearTimeId = setInterval(function() {
-							windowStartTop = (windowStartTop - speed);
-							window.scrollTo(0, windowStartTop);
-							if((windowStartTop - speed) < y) {
-								window.scrollTo(0, y);
-								clearInterval(this.clearTimeId);
-							}
-
-						}, fx);
-
-					} else {
-						if(windowStartTop == y) {
-							return;
-						}
-						this.clearTimeId = setInterval(function() {
-							windowStartTop = (windowStartTop + speed);
-							window.scrollTo(0, windowStartTop);
-							if((windowStartTop + speed) > y) {
-								window.scrollTo(0, y);
-								clearInterval(this.clearTimeId);
-							}
-
-						}, fx);
-					}
-
+				clearInterval(this.clearTimeId);
+				
+				if(this !== window) {
+					 throw new Error("element must is window");
 				}
+				var speed1 = time / fx;
+				var windowStartTop = parseFloat(window.pageYOffset) || 0;
+				var speed2 = Math.abs(windowStartTop - y);
+				speed = speed2 / speed1;
+
+				if(windowStartTop > y) {
+					this.clearTimeId = setInterval(function() {
+						windowStartTop = (windowStartTop - speed);
+						window.scrollTo(0, windowStartTop);
+						if((windowStartTop - speed) < y) {
+							window.scrollTo(0, y);
+							clearInterval(this.clearTimeId);
+						}
+
+					}, fx);
+
+				} else {
+					if(windowStartTop === y) {
+						return;
+					}
+					this.clearTimeId = setInterval(function() {
+						windowStartTop = (windowStartTop + speed);
+						window.scrollTo(0, windowStartTop);
+						if((windowStartTop + speed) > y) {
+							window.scrollTo(0, y);
+							clearInterval(this.clearTimeId);
+						}
+
+					}, fx);
+				}
+
 				return false;
 			});
 			return this;
+		},
+
+		//  scrollTop
+		scrollTop: function(size) {
+
+			// get
+			if(arguments.length === 0) {
+				var _size = 0;
+				Mobile.each(this, function() {
+					if(this === window || this === document) {
+						_size = window.pageYOffset || 0;
+					} else {
+						_size = this.scrollTop;
+					}
+					return false;
+				});
+				return _size;
+			} else {
+				Mobile.each(this, function() {
+					if(this === window || this === document) {
+						window.scrollTo(0, parseFloat(size));
+
+					} else {
+						this.scrollTop = parseFloat(size);
+					}
+				});
+
+				// set
+				return this;
+			}
 		},
 
 		// transition
@@ -1121,12 +1262,14 @@
 						this.addEventListener(type, handler, bl);
 					}
 					//ie8
-					//					else if(this.attachEvent) {
-					//						if(!this.attachEvent("on" + type, handler, bl)) {
-					//							window["on" + type] = handler;
-					//						}
-					//					}
+					else if(this.attachEvent) {
+						this.attachEvent("on" + type, handler, bl)
+					} else {
+						this["on" + type] = handler /*直接赋给事件*/
+					}
 				});
+
+				m.events.on(type, handler);
 			}
 
 			// 委托绑定事件
@@ -1144,24 +1287,42 @@
 						}, bl);
 					}
 				});
+
+				m.events.on(type, handler);
 			}
 
 			return this;
 
 		},
 
-		off: function(type, handler, bl) {
-			if(typeof bl !== "boolean") {
-				bl = false;
-			}
+		off: function(type, handler) {
 
+			if(arguments.length === 1) {
+				Mobile.each(this, function() {
+					for(var i=m.events.props[type].length-1; i>=0; i--) {
+						
+						if(this.removeEventListener) {
+							this.removeEventListener(type, m.events.props[type][i], false);
+						} else {
+							this.deattachEvent("on" + type, m.events.props[type][i]);
+						}
+						
+						Mobile.events.off(type,m.events.props[type][i]);
+					}
+				});
+
+				return;
+			}
 			Mobile.each(this, function() {
-				if(this.removeEventListener) {
-					this.removeEventListener(type, handler, bl);
+				if(this.removeEventListener)
+					this.removeEventListener(type, handler, false);
+				else if(this.deattachEvent) { /*IE*/
+					this.deattachEvent('on' + type, handler);
+				} else {
+					this["on" + type] = null;
+					/*直接赋给事件*/
 				}
-				//				else if(el.detachEvent) { //ie8
-				//					this.detachEvent("on" + type, handler, bl);
-				//				}
+				Mobile.events.off(type,handler);
 			});
 
 			return this;
@@ -1236,19 +1397,89 @@
 			});
 		},
 
+		// resize
+		resize: function(fn, bl) {
+			bl = bl || false;
+			Mobile.each(this, function() {
+				m(this).on("resize", fn, bl);
+			});
+		},
+
+		// change
+		change: function(fn, bl) {
+			bl = bl || false;
+			Mobile.each(this, function() {
+				m(this).on("change", fn, bl);
+			});
+		},
+
+		//  blur
+		blur: function(fn, bl) {
+			if(arguments.length === 0) {
+				$(this).each(function() {
+					this.blur();
+
+				});
+
+				return;
+			}
+			bl = bl || false;
+			Mobile.each(this, function() {
+				m(this).on("blur", fn, bl);
+			});
+		},
+
+		// focus
+		focus: function(fn, bl) {
+			if(arguments.length === 0) {
+				$(this).each(function() {
+					this.focus();
+
+				});
+
+				return;
+			}
+			bl = bl || false;
+			Mobile.each(this, function() {
+				m(this).on("focus", fn, bl);
+			});
+		},
+
+		// keyup
+		keyup: function(fn, bl) {
+			bl = bl || false;
+			Mobile.each(this, function() {
+				m(this).on("keyup", fn, bl);
+			});
+		},
+
+		// keyup
+		keydown: function(fn, bl) {
+			bl = bl || false;
+			Mobile.each(this, function() {
+				m(this).on("keydown", fn, bl);
+			});
+		},
+
+		// keypress
+		keypress: function(fn, bl) {
+			bl = bl || false;
+			Mobile.each(this, function() {
+				m(this).on("keypress", fn, bl);
+			});
+		},
 	});
 
-	
 	/*ajax static*/
-	
+
 	// init xhr
 	var _xhrCORS;
-	
+
 	// ajax type
 	function _ajaxFun(url, type, data, _arguments) {
 		var success;
 		var error;
-		var  progress;
+		var progress;
 		if(typeof data === "object" && _arguments.length > 2) {
 			success = _arguments[2];
 			if(_arguments.length >= 3) {
@@ -1271,6 +1502,47 @@
 			error: error,
 			progress: progress
 		});
+
+	}
+
+	// 链接ajax发送的参数数据
+	function _JoinParams(data) {
+		// 参数data对象字符
+		var params = [];
+
+		for(var key in data) {
+
+			if(typeof data[key] === "object") {
+				var data2 = data[key];
+				// object
+				if(data[key].constructor !== Array) {
+					for(var key2 in data2) {
+						var _key = key + "[" + key2 + "]";
+						var _value = data2[key2];
+						params.push(encodeURIComponent(_key) + '=' + encodeURIComponent(_value));
+					}
+				} else {
+					for(var key2 in data2) {
+
+						var data3 = data2[key2];
+						if(typeof data3 === "object" && data3.constructor !== Array) {
+							for(var key3 in data3) {
+								var _key = key + "[" + key2 + "]" + "[" + key3 + "]";
+								var _value = data3[key3];
+								params.push(encodeURIComponent(_key) + '=' + encodeURIComponent(_value));
+
+							}
+						}
+
+					}
+				}
+			} else {
+				params.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+			}
+
+		}
+
+		return params.join("&") || "";
 
 	}
 
@@ -1322,34 +1594,22 @@
 			opt.data = typeof opt.data === "object" ? opt.data : {};
 			opt.success = opt.success || function() {};
 			opt.error = opt.error || function() {};
-			opt.contentType =opt.contentType || "application/x-www-form-urlencoded;charset=utf-8";
+			opt.contentType = opt.contentType || "application/x-www-form-urlencoded;charset=utf-8";
 			opt.progress = opt.progress || {};
-			
+
 			var xhr = Mobile.createXHR();
-			if(typeof opt.timeout === "number" ){
-				xhr.timeout =opt.timeout
+			if(typeof opt.timeout === "number") {
+				xhr.timeout = opt.timeout
 			}
-			
-			xhr.xhrFields=opt.xhrFields||{};
-		
-			// 参数data对象字符
-			var params = [];
-			for(var key in opt.data) {
-				params.push(encodeURIComponent(key) + '=' + encodeURIComponent(opt.data[key]));
-			}
-			var postData = params.join('&');
+
+			xhr.xhrFields = opt.xhrFields || {};
+
+			// 连接参数
+			var postData = _JoinParams(opt.data); // params.join('&');
 
 			if(opt.type.toUpperCase() === 'POST' || opt.type.toUpperCase() === 'PUT' || opt.type.toUpperCase() === 'DELETE') {
 				opt.url = opt.url.indexOf("?") === -1 ? opt.url + "?" + "_=" + Math.random() : opt.url + "&_=" + Math.random();
-				
-				// 进度条
-				if(typeof xhr.withCredentials!=="undefined"&&xhr.withCredentials===true){
-					 
-					xhr.upload.onprogress=opt.progress.onup||function(){};
-					xhr.onprogress=opt.progress.ondown||function(){};
-					xhr.onload=opt.progress.onload||function(){};
-					xhr.onerror=opt.progress.onerror||function(){};
-				}
+
 				xhr.open(opt.type, opt.url, opt.async);
 				xhr.setRequestHeader('Content-Type', opt.contentType);
 				xhr.send(postData);
@@ -1358,15 +1618,7 @@
 					postData = "&" + postData;
 				}
 				opt.url = opt.url.indexOf("?") === -1 ? opt.url + "?" + "_=" + Math.random() + postData : opt.url + "&_=" + Math.random() + postData;
-				
-				// 进度条
-				if(typeof xhr.withCredentials!=="undefined"&&xhr.withCredentials===true){
-					xhr.upload.onprogress=opt.progress.onup||function(){};
-					xhr.onprogress=opt.progress.ondown||function(){};
-					xhr.onload=opt.progress.onload||function(){};
-					xhr.onerror=opt.progress.onerror||function(){};
-				}
-				
+
 				xhr.open(opt.type, opt.url, opt.async);
 				xhr.send(null);
 			}
@@ -1375,7 +1627,12 @@
 				if(xhr.readyState === 4) {
 					if((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
 						if(typeof opt.success === "function") {
-							opt.success(JSON.parse(xhr.responseText), xhr.status, xhr.statusText);
+							try {
+								opt.success(JSON.parse(xhr.responseText), xhr.status, xhr.statusText);
+							} catch(e) {
+								//TODO handle the exception
+								opt.success(xhr.responseText, xhr.status, xhr.statusText);
+							}
 						}
 					} else {
 						if(typeof opt.error === "function") {
@@ -1414,10 +1671,9 @@
 			var callback;
 			if(typeof data === "function") {
 				callback = data;
-			}else if(arguments.length >= 3) {
+			} else if(arguments.length >= 3) {
 				callback = arguments[2];
 			}
-			
 
 			// 创建一个几乎唯一的id
 			var callbackName = "mobile" + (new Date()).getTime().toString().trim();
@@ -1454,49 +1710,46 @@
 		},
 
 		/* CORS 跨域 加进度条*/
-	
-		isCORS:function(){
-			
-			if(typeof _xhrCORS==="undefined"){
-				 _xhrCORS=Mobile.createXHR();
-			}			
-			if( typeof _xhrCORS.withCredentials!=="undefined"){
-				 return  true;
-			}
-			
-			  return false;
-		},
-		
-		// ajax
-		ajaxCORS:function(opt){
-			if(Mobile.isCORS()){
-				Mobile.ajax(opt);
-			}else{
-				console.log("not support CORS")
-			}
-		},
-		
-		// get
-		getCORS:function(url,data){
-			if(Mobile.isCORS()){
-				_ajaxFun(url, "get", data, arguments);
-			}else{
-				console.log("not support CORS")
-			}
-		},
-		// post
-		postCORS:function(url,data){
-			if(Mobile.isCORS()){
-				_ajaxFun(url, "post", data, arguments);
-			}else{
-				console.log("not support CORS")
-			}
-		}
-		
-		
-		
-	});
 
+		isCORS: function() {
+
+			if(typeof _xhrCORS === "undefined") {
+				_xhrCORS = Mobile.createXHR();
+			}
+			if(typeof _xhrCORS.withCredentials !== "undefined") {
+				return true;
+			}
+
+			return false;
+		},
+
+		//		// ajax
+		//		ajaxCORS: function(opt) {
+		//			if(Mobile.isCORS()) {
+		//				Mobile.ajax(opt);
+		//			} else {
+		//				console.log("not support CORS")
+		//			}
+		//		},
+		//
+		//		// get
+		//		getCORS: function(url, data) {
+		//			if(Mobile.isCORS()) {
+		//				_ajaxFun(url, "get", data, arguments);
+		//			} else {
+		//				console.log("not support CORS")
+		//			}
+		//		},
+		//		// post
+		//		postCORS: function(url, data) {
+		//			if(Mobile.isCORS()) {
+		//				_ajaxFun(url, "post", data, arguments);
+		//			} else {
+		//				console.log("not support CORS")
+		//			}
+		//		}
+
+	});
 
 	/*extend 静态方法*/
 	Mobile.extend({
@@ -1709,7 +1962,47 @@
 
 			str = txt.replace(/^\s*|\s*$/img, "");
 			return str;
-		}　
+		}
+	});
+
+	/**绑定自定义事件函数**/
+	Mobile.extend({
+		events: {
+			props: {},
+
+			// bind events
+			on: function(eventName, fn) {
+				this.props[eventName] = this.props[eventName] || [];
+				this.props[eventName].push(fn);
+			},
+			off: function(eventName, fn) {
+				if(arguments.length === 1) {
+
+					this.props[eventName] = [];
+
+				} else if(arguments.length === 2) {
+					var $events = this.props[eventName] || [];
+					for(var i = 0; i < $events.length; i++) {
+						if($events[i] === fn) {
+							$events.splice(i, 1);
+							break;
+						}
+
+					}
+
+				}
+
+			},
+			emit: function(eventName, data) {
+
+				if(this.events[eventName]) {
+					for(var i = 0; i < this.events[eventName].length; i++) {
+						this.events[eventName][i](data);
+					}
+
+				}
+			}
+		}
 	});
 
 	// module

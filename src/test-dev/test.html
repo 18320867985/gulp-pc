@@ -43,9 +43,9 @@
 			
 			html,
 			body {
-				/*/background: url(../demo/images/1.jpg) no-repeat;*/
+				/*//	background: url(../demo/images/1.jpg) no-repeat;
 				background-size: cover;
-				background-attachment: fixed;
+				background-attachment: fixed;*/
 			}
 			
 			.bg {
@@ -89,27 +89,16 @@
 				vertical-align: middle;
 			}
 			
-			html {
-				scrollbar-3dlight-color: #999;
-				scrollbar-darkshadow-color: #999;
-				scrollbar-highlight-color: #fff;
-				scrollbar-shadow-color: #eee;
-				scrollbar-arrow-color: #000;
-				scrollbar-face-color: #ddd;
-				scrollbar-track-color: #eee;
-				scrollbar-base-color: #ddd;
-				filter: alpha(opcity)
-			}
-			
-			.hoverdh {
+			._hoverdh {
 				width: 60px;
 				height: 80px;
-				background: orange;
+				background: green;
 				box-shadow: 1px 1px 2px #ccc, -1px -1px 2px #ccc;
 				cursor: pointer;
+				outline: none;
 			}
 			
-			.hoverdh:hover {
+			._hoverdh:hover {
 				animation: dh .4s;
 			}
 			
@@ -127,149 +116,98 @@
 					transform: skew(0deg);
 				}
 			}
-
-            @keyframes hd {
-                20% {
-                    
-                }
-            }
+			
+			.clearfix:after {
+				content: "";
+				display: block;
+				clear: both;
+			}
+			
+			.opbig {
+				position: relative;
+				height: 330px;
+				width: 800px;
+			}
+			
+			.op {
+				position: relative;
+				bottom: 330px;
+				left: 0;
+				z-index: 9;
+				opacity: 0;
+				transition: all 1s;
+			}
+			
+			.op:hover {
+				opacity: 1;
+			}
+			
+			.a {
+				border: 1px solid #ccc;
+				width: 100px;
+				height: 100px;
+			}
+			
+			.test2 {
+				height: 50px;
+				width: 500px;
+				border: 1px solid red;
+				font-size: 0;
+				position: relative;
+				padding-top: 4px;
+			}
+			
+			.test2 div {
+				width: 100px;
+				display: inline-block !important;
+				border: none;
+				font-size: 14px;
+			}
+			
+			.test2 .a {
+				background: blue;
+				height: 30px;
+				vertical-align: middle;
+			}
+			
+			.test2 .b {
+				margin: 0 10px;
+				background: orange;
+				height: 40px;
+				vertical-align: middle;
+			}
+			
+			button {
+				font-size: 14px;
+				vertical-align: middle;
+				display: inline-block !important;
+			}
+			.test3{
+			border:1px solid red;
+			height: 50px;
+			line-height:50px;
+			}
 		</style>
 
 	</head>
 
 	<body>
 
-		<div class="hoverdh">
+		<div class="_hoverdh">
 			hover
 		</div>
 
-		<div class="contailer test">
-			<div class="item">
-				<img src="../demo/images/0.jpg" alt="" />
-				<div class="img-mask"></div>
-				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
-				<div class="find-sd">
-					<span>找相似</span>
-				</div>
+		<hr />
+		<div class="test2">
+			<div class="a">a</div>
+			<div class="b">b</div>
+			<button type="button">btn</button>
 
-			</div>
-			<div class="item">
-				<img src="../demo/images/0.jpg" alt="" />
-				<div class="img-mask"></div>
-				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
-				<div class="find-sd">
-					<span>找相似</span>
-				</div>
-
-			</div>
-			<div class="item">
-				<img src="../demo/images/0.jpg" alt="" />
-				<div class="img-mask"></div>
-				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
-				<div class="find-sd">
-					<span>找相似</span>
-				</div>
-
-			</div>
-			<div class="item">
-				<img src="../demo/images/0.jpg" alt="" />
-				<div class="img-mask"></div>
-				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
-				<div class="find-sd">
-					<span>找相似</span>
-				</div>
-
-			</div>
-			<div class="item">
-				<img src="../demo/images/0.jpg" alt="" />
-				<div class="img-mask"></div>
-				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
-				<div class="find-sd">
-					<span>找相似</span>
-				</div>
-
-			</div>
-			<div class="item">
-				<img src="../demo/images/0.jpg" alt="" />
-				<div class="img-mask"></div>
-				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
-				<div class="find-sd">
-					<span>找相似</span>
-				</div>
-
-			</div>
-			<div class="item">
-				<img src="../demo/images/0.jpg" alt="" />
-				<div class="img-mask"></div>
-				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
-				<div class="find-sd">
-					<span>找相似</span>
-				</div>
-
-			</div>
-			<div class="item">
-				<img src="../demo/images/0.jpg" alt="" />
-				<div class="img-mask"></div>
-				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
-				<div class="find-sd">
-					<span>找相似</span>
-				</div>
-
-			</div>
-			<div class="item">
-				<img src="../demo/images/0.jpg" alt="" />
-				<div class="img-mask"></div>
-				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
-				<div class="find-sd">
-					<span>找相似</span>
-				</div>
-
-			</div>
-			<div class="item">
-				<img src="../demo/images/0.jpg" alt="" />
-				<div class="img-mask"></div>
-				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
-				<div class="find-sd">
-					<span>找相似</span>
-				</div>
-
-			</div>
-			<div class="item">
-				<img src="../demo/images/0.jpg" alt="" />
-				<div class="img-mask"></div>
-				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
-				<div class="find-sd">
-					<span>找相似</span>
-				</div>
-
-			</div>
-			<div class="item">
-				<img src="../demo/images/0.jpg" alt="" />
-				<div class="img-mask"></div>
-				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
-				<div class="find-sd">
-					<span>找相似</span>
-				</div>
-
-			</div>
-			<div class="item">
-				<img src="../demo/images/0.jpg" alt="" />
-				<div class="img-mask"></div>
-				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
-				<div class="find-sd">
-					<span>找相似</span>
-				</div>
-
-			</div>
-			<div class="item">
-				<img src="../demo/images/0.jpg" alt="" />
-				<div class="img-mask"></div>
-				<p>wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</p>
-				<div class="find-sd">
-					<span>找相似</span>
-				</div>
-
-			</div>
+		</div>
+		<div class="test3">
+			士大夫地方的顺丰到付
+		</div>
+		<div class="contailer clearfix test">
 			<div class="item">
 				<img src="../demo/images/0.jpg" alt="" />
 				<div class="img-mask"></div>
@@ -290,7 +228,13 @@
 			</div>
 
 		</div>
-
+		<hr />
+		<div class="opbig clearfix">
+			<img src="../demo/images/0.jpg" alt="" />
+			<img class="op" src="../demo/images/1.jpg" alt="" />
+		</div>
+		<p>65765765756756756</p>
+		<a href="#" class="a">aaaaaa</a>
 		<script src="../js-dev/libs/jq/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../js/all.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">

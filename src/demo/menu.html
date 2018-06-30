@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title><br />	
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+		<style type="text/css">
+		.contailer{
+			width:1000px;
+			margin: 0 auto;
+			position: relative;
+			
+		}
+		.contailer>div{
+			margin-top: 200px;
+		}
+		.menu-item{
+			width: 60px;
+			height: 60px;
+			line-height: 60px;
+			text-align: center;
+			border-radius: 50%;
+			background:#555;
+			color: #fff;
+			transition: all 800ms;
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 1;
+			box-shadow: 2px 2px 5px #ccc,-2px -2px 5px #ccc;
+			
+		}
+		
+		.menu{
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 2;
+			cursor: pointer;
+		}
+		
+			
+		.menu-1{
+			background: green;
+		}
+		.menu-1.active{
+			transform: translate(250px,-120px) rotateY(360deg);
+		
+		}
+		.menu-2{
+			background: orangered;
+		}
+		.menu-2.active{
+		    transform: translate(292px,-50px) rotateY(360deg); 
+			
+		}
+		
+		.menu-3{
+			background:blueviolet;
+		
+		}
+		.menu-3.active{
+			    transform: translate(292px,30px) rotateY(360deg);
+			
+		}
+		.menu-4{
+			background:goldenrod;
+		
+		}
+		.menu-4.active{
+			    transform: translate(251px,100px) rotateY(360deg);
+			
+		}
+		</style>
+	</head>
+
+	<body>
+	
+	<div class="contailer">
+		<div  class="menu menu-item">菜单</div>
+		<div  class="menu-1 menu-item">首页</div>
+		<div  class="menu-2 menu-item">分类</div>
+		<div  class="menu-3 menu-item">购物车</div>
+		<div  class="menu-4 menu-item">我的</div>
+		
+	</div>
+	<script src="js/mobile-1.0.0.js" type="text/javascript" charset="utf-8"></script>
+	<!--	<script src="js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>-->
+		<script type="text/javascript">
+			//  menu
+			$(function(){
+				
+				$(".menu").click(function(){
+					if(!this.bl){
+					this.bl=true;
+					$(".menu").siblings().addClass("active");
+				
+					}else{
+						this.bl=false;
+						$(".menu").siblings().removeClass("active");
+					}
+				
+				});
+				
+			});
+			
+		</script>
+	</body>
+
+</html>
