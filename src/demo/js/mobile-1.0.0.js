@@ -2005,9 +2005,23 @@
 		}
 	});
 
-	// module
+	//  cmd commonjs
 	if(typeof module === "object" && typeof module.exports === "object") {
 		module.exports = Mobile;
+	}
+
+	// amd requirejs
+	if(typeof define === "function" && define.amd) {
+		define(function() {
+			return Mobile;
+		});
+	}
+	// cmd seajs
+	if(typeof define === "function"&& define.cmd) {
+		define(function(require, exports, module) {
+			module.exports = Mobile;
+		});
+
 	}
 
 })();

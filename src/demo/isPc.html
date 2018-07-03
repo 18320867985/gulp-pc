@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+
+		<script >
+			function isPC() {
+				var userAgentInfo = navigator.userAgent.toString().toLowerCase();
+				var Agents = ["Android", "iPhone",
+					"SymbianOS", "Windows Phone",
+					"iPad", "iPod"
+				];
+				console.log(userAgentInfo)
+				var flag = true;
+				for(var v = 0; v < Agents.length; v++) {
+					if(userAgentInfo.indexOf(Agents[v].toLowerCase()) > 0) {
+						flag = false;
+						break;
+					}
+				}
+				return flag;
+			}
+			
+		
+			if(isPC()){
+				alert("pc")
+			}else{
+				alert("mobile")
+			}
+		
+			
+		</script>
+	</body>
+
+</html>
