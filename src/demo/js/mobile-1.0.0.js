@@ -11,8 +11,11 @@
 
 	/*创建mobile对象*/
 	var Mobile = window.$ = window.m = window.mobile = function(selector, content) {
-		
-		if(typeof selector ==="function"&&arguments.length===1){Mobile.ready(selector); return;};
+
+		if(typeof selector === "function" && arguments.length === 1) {
+			Mobile.ready(selector);
+			return;
+		};
 		return new Mobile.fn.init(selector, content);
 	};
 
@@ -86,16 +89,15 @@
 				} else if(typeof selector === "object") {
 
 					// 遍历数组型对象
-					if(selector.length && selector.length > 0) {
+					if(selector.hasOwnProperty("length") && selector.length > 0) {
 						Mobile.each(selector, function(i, v) {
 							arrs.push(v);
 						});
-					}
-
-					// 单例对象 
-					else if(arrs.length === 0) {
+					} else if(selector.nodeType === Node.ELEMENT_NODE || selector.nodeType === Node.DOCUMENT_NODE || selector === window) {
+						// 单例对象 
 						arrs.push(selector);
 					}
+
 					Array.prototype.push.apply(this, arrs);
 
 				}
@@ -125,7 +127,7 @@
 						return this;
 					}
 					// 遍历数组型对象
-					if(content.length && content.length > 0) {
+					if(content.hasOwnProperty("length") && content.length > 0) {
 
 						Mobile.each(content, function() {
 							var childElements = this.querySelectorAll(selector);
@@ -233,16 +235,17 @@
 		// find
 		find: function(selector) {
 			var arr = [];
-			for(var i = 0; i < this.length; i++) {
-				var _arr = this[i].querySelectorAll(selector);
+			var obj = m(this);
+			for(var i = 0; i < obj.length; i++) {
+				var _arr = obj[i].querySelectorAll(selector);
 				Mobile.each(_arr, function(i, v) {
 					arr.push(v);
 				})
-				delete this[i];
+				delete obj[i];
 			}
-			delete this.length;
-			Array.prototype.push.apply(this, arr);
-			return this;
+			delete obj.length;
+			Array.prototype.push.apply(obj, arr);
+			return obj;
 		},
 
 		// text
@@ -309,9 +312,12 @@
 
 			// 返回第一个属性值
 			if(arguments.length === 1 && typeof attr === "string") {
-				var _attr;
+				var _attr = undefined;
 				Mobile.each(this, function() {
 					_attr = this.getAttribute(attr);
+					if(_attr === null) {
+						_attr = undefined;
+					}
 					return false;
 				});
 				return _attr;
@@ -325,6 +331,22 @@
 
 			}
 			return this;
+		},
+
+		// hasAttr
+		hasAttr: function(attr) {
+
+			// 是否含有元素的属性
+			var _attr = false;
+			if(arguments.length === 1 && typeof attr === "string") {
+
+				Mobile.each(this, function() {
+					_attr = this.hasAttribute(attr);
+					return false;
+				});
+				return _attr;
+			}
+
 		},
 
 		// removeAttr
@@ -344,10 +366,23 @@
 		// addClass
 		addClass: function(className) {
 
+			if(typeof className === "string") {
+				className = className.split(/\s+/);
+
+			} else {
+
+				return this;
+			}
+
 			if(arguments.length === 1) {
 
 				Mobile.each(this, function() {
-					this.classList.add(className);
+					for(var y = 0; y < className.length; y++) {
+						if(className[y]) {
+							this.classList.add(className[y]);
+						}
+
+					}
 				});
 
 			}
@@ -355,13 +390,41 @@
 			return this;
 		},
 
+		//  hasclass
+		hasClass: function(className) {
+			var ishasClass = false;
+			if(arguments.length === 1) {
+
+				Mobile.each(this, function() {
+					ishasClass = this.classList.contains(className);
+					return false;
+				});
+
+			}
+
+			return ishasClass;
+		},
+
 		// removeClass
 		removeClass: function(className) {
+
+			if(typeof className === "string") {
+				className = className.split(/\s+/);
+
+			} else {
+
+				return this;
+			}
 
 			if(arguments.length === 1) {
 
 				Mobile.each(this, function() {
-					this.classList.remove(className);
+					for(var y = 0; y < className.length; y++) {
+						if(className[y]) {
+							this.classList.remove(className[y]);
+						}
+
+					}
 
 				});
 
@@ -372,63 +435,66 @@
 		// parent 
 		parent: function() {
 			var arr = [];
-			for(var i = 0; i < this.length; i++) {
-				var _arr = this[i].parentElement;
+			var obj = m(this);
+			for(var i = 0; i < obj.length; i++) {
+				var _arr = obj[i].parentElement;
 				if(_arr) {
 					arr.push(_arr)
 				}
-				delete this[i];
+				delete obj[i];
 			}
-			delete this.length;
-			Array.prototype.push.apply(this, arr);
-			return this;
+			delete obj.length;
+			Array.prototype.push.apply(obj, arr);
+			return obj;
 		},
 
 		// parents 
 		parents: function(selector) {
 			selector = typeof selector === "string" ? selector : "";
 			var arr = [];
-			for(var i = 0; i < this.length; i++) {
+			var obj = m(this);
+			for(var i = 0; i < obj.length; i++) {
 
-				var p = _searchParents(this[i], function(elm) {
+				var p = _searchParents(obj[i], function(elm) {
 					var bl = false;
 					bl = Mobile.checkSelector(elm, selector);
 					return bl;
 				});
 
-				delete this[i];
+				delete obj[i];
 				if(p) {
 					arr.push(p);
 				}
 			};
-			delete this.length;
-			Array.prototype.push.apply(this, arr);
-			return this;
+			delete obj.length;
+			Array.prototype.push.apply(obj, arr);
+			return obj;
 		},
 
 		// closest 
 		closest: function(selector) {
 			selector = typeof selector === "string" ? selector : "";
 			var arr = [];
-			for(var i = 0; i < this.length; i++) {
+			var obj = m(this);
+			for(var i = 0; i < obj.length; i++) {
 				var p;
-				if(Mobile.checkSelector(this[i], selector)) {
-					arr.push(this[i]);
+				if(Mobile.checkSelector(obj[i], selector)) {
+					arr.push(obj[i]);
 				} else {
-					p = _searchParents(this[i], function(elm) {
+					p = _searchParents(obj[i], function(elm) {
 						var bl = false;
 						bl = Mobile.checkSelector(elm, selector);
 						return bl;
 					});
 				}
-				delete this[i];
+				delete obj[i];
 				if(p) {
 					arr.push(p);
 				}
 			};
-			delete this.length;
-			Array.prototype.push.apply(this, arr);
-			return this;
+			delete obj.length;
+			Array.prototype.push.apply(obj, arr);
+			return obj;
 		},
 
 		// eq 
@@ -437,94 +503,102 @@
 				throw Error("index property must is number type")
 			}
 			var arr = [];
-			for(var i = 0; i < this.length; i++) {
+			var obj = m(this);
+			for(var i = 0; i < obj.length; i++) {
 				if(i === index) {
-					arr.push(this[i])
+					arr.push(obj[i])
 				}
-				delete this[i];
+				delete obj[i];
 			}
-			delete this.length;
-			Array.prototype.push.apply(this, arr);
-			return this;
+			delete obj.length;
+
+			Array.prototype.push.apply(obj, arr);
+			return obj;
 		},
 
 		//  first
 		first: function() {
 
 			var arr = [];
-			for(var i = 0; i < this.length; i++) {
+			var obj = m(this);
+			for(var i = 0; i < obj.length; i++) {
 				if(i === 0) {
-					arr.push(this[i])
+					arr.push(obj[i])
 				}
-				delete this[i];
+				delete obj[i];
 			}
-			delete this.length;
-			Array.prototype.push.apply(this, arr);
-			return this;
+			delete obj.length;
+			Array.prototype.push.apply(obj, arr);
+			return obj;
 		},
 
 		//  prev
 		prev: function() {
 			var arr = [];
-			Mobile.each(this, function(i, v) {
-				var _prev = this.previousElementSibling;
+			var obj = m(this);
+			Mobile.each(obj, function(i, v) {
+				var _prev = v.previousElementSibling;
 				if(_prev) {
 					arr.push(_prev)
 				}
-				delete this[i];
+				delete v[i];
 			});
-			delete this.length;
-			Array.prototype.push.apply(this, arr);
-			return this;
+			delete obj.length;
+			Array.prototype.push.apply(obj, arr);
+			return obj;
 		},
 
 		//  next
 		next: function() {
 			var arr = [];
-			Mobile.each(this, function(i, v) {
-				var _next = this.nextElementSibling;
+			var obj = m(this);
+			Mobile.each(obj, function(i, v) {
+				var _next = v.nextElementSibling;
 				if(_next) {
 					arr.push(_next)
 				}
-				delete this[i];
+				delete v[i];
 			});
-			delete this.length;
-			Array.prototype.push.apply(this, arr);
-			return this;
+			delete obj.length;
+			Array.prototype.push.apply(obj, arr);
+			return obj;
 		},
 
 		//  siblings
 		siblings: function() {
 			var arr = [];
-			Mobile.each(this, function(i, v) {
-				var _children = this.parentElement.children;
-				var _index = m(_children).index(m(this));
+			var obj = m(this);
+			Mobile.each(obj, function(i, v) {
+				var _children = v.parentElement.children;
+				var _index = m(v).index();
+
 				for(var y = 0; y < _children.length; y++) {
 					if(y !== _index) {
 						arr.push(_children[y]);
 					}
 				}
-				delete this[i];
+				delete v[i];
 			});
-			delete this.length;
-			Array.prototype.push.apply(this, arr);
-			return this;
+			delete obj.length;
+			Array.prototype.push.apply(obj, arr);
+			return obj;
 		},
 
 		//  last
 		last: function() {
 
 			var arr = [];
-			for(var i = 0; i < this.length; i++) {
-				var _length = (this.length > 0) ? this.length - 1 : 0;
+			var obj = m(this);
+			for(var i = 0; i < obj.length; i++) {
+				var _length = (obj.length > 0) ? obj.length - 1 : 0;
 				if(i === _length) {
-					arr.push(this[i])
+					arr.push(obj[i])
 				}
-				delete this[i];
+				delete obj[i];
 			}
-			delete this.length;
-			Array.prototype.push.apply(this, arr);
-			return this;
+			delete obj.length;
+			Array.prototype.push.apply(obj, arr);
+			return obj;
 		},
 
 		//  heigth
@@ -739,13 +813,6 @@
 					}
 
 					return false;
-				});
-			} else if(arguments.length === 1) {
-				Mobile.each(this, function(i, v) {
-					obj = obj.length && obj.length > 0 ? obj[0] : obj;
-					if(v.isEqualNode(obj)) {
-						_index = i;
-					}
 				});
 			}
 
@@ -974,9 +1041,9 @@
 			Mobile.each(this, function() {
 				this.clearTimeId = this.clearTimeId || 0;
 				clearInterval(this.clearTimeId);
-				
+
 				if(this !== window) {
-					 throw new Error("element must is window");
+					throw new Error("element must is window");
 				}
 				var speed1 = time / fx;
 				var windowStartTop = parseFloat(window.pageYOffset) || 0;
@@ -1046,9 +1113,34 @@
 
 		// transition
 		transition: function(option, time, ease, delay, fn) {
+
 			ease = typeof ease === "string" ? ease : "ease";
 			delay = typeof delay === "number" ? delay : 0;
 			var _transition = "all " + time / 1000 + "s  " + ease + " " + (delay / 1000) + "s";
+
+			if(typeof option === "string") {
+
+				if(arguments.length === 1) {
+					_transition = option;
+				} else if(arguments.length > 1) {
+					_transition = option + " " + time / 1000 + "s  " + ease + " " + (delay / 1000) + "s";
+				}
+
+				Mobile.each(this, function() {
+					this.style.MozTransition = _transition;
+					this.style.msTransition = _transition;
+					this.style.webkitTransition = _transition;
+					this.style.OTransition = _transition;
+					this.style.transition = _transition;
+				});
+
+				return this;
+			}
+
+			// option is object	
+			if(typeof option != "object") {
+				return;
+			}
 			Mobile.each(this, function(i, el) {
 				time = typeof time === "number" ? time : 400;
 				el.setTimeout = el.setTimeout || 0; // 第一次执行
@@ -1253,42 +1345,123 @@
 	Mobile.fn.extend({
 		on: function(type) {
 
-			// 第二个参数为函数 正常绑定事件
+			var $this = this;
+			var isonebind = $this.length > 0 && $this.bindOneElementEvent ? true : false; // m(el).one()只绑定一次事件
+
+			// 正常绑定事件
 			if(arguments.length >= 2 && typeof arguments[1] === "function") {
 				var handler = arguments[1];
 				var bl = typeof arguments[2] === "boolean" ? arguments[2] : false;
+
+				function f(event) {
+					handler.call(event.target, event);
+
+					// m(el).one()只绑定一次事件
+					if(isonebind) {
+						m(this).off(type, f, bl);
+						m.events.on(type, f);
+						$this.bindOneElementEvent = false;
+					}
+				}
+
 				Mobile.each(this, function() {
 					if(this.addEventListener) {
-						this.addEventListener(type, handler, bl);
+						this.addEventListener(type, f, bl);
 					}
 					//ie8
-					else if(this.attachEvent) {
-						this.attachEvent("on" + type, handler, bl)
-					} else {
-						this["on" + type] = handler /*直接赋给事件*/
-					}
+					//					else if(this.attachEvent) {
+					//						this.attachEvent("on" + type, f, bl)
+					//					} else {
+					//						this["on" + type] =f /*直接赋给事件*/
+					//					}
 				});
 
-				m.events.on(type, handler);
+				m.events.on(type, f);
+			}
+
+			// 正常绑定事件传object值
+			if(arguments.length >= 3 && typeof arguments[1] === "object" && typeof arguments[2] === "function") {
+				var obj = arguments[1]
+				var handler = arguments[2];
+				var bl = typeof arguments[3] === "boolean" ? arguments[3] : false;
+
+				function f(event) {
+					event.data = obj;
+					handler.call(event.target, event);
+
+					// m(el).one()只绑定一次事件
+					if(isonebind) {
+						m(this).off(type, f, bl);
+						m.events.on(type, f);
+						$this.bindOneElementEvent = false;
+					}
+				}
+
+				Mobile.each(this, function() {
+					if(this.addEventListener) {
+						this.addEventListener(type, f, bl);
+					}
+
+				});
+
+				m.events.on(type, f);
 			}
 
 			// 委托绑定事件
 			if(arguments.length >= 3 && typeof arguments[1] === "string" && typeof arguments[2] === "function") {
 				var el = arguments[1].trim();
 				var handler = arguments[2];
-				var bl = typeof arguments[3] === "boolean" ? arguments[3] : false
+				var bl = typeof arguments[3] === "boolean" ? arguments[3] : false;
+
+				function f(event) {
+					if(Mobile.checkSelector(event.target, el)) {
+						handler.call(event.target, event);
+
+						// m(el).one()只绑定一次事件
+						if(isonebind) {
+							m(this).off(type, f, bl);
+							m.events.on(type, f);
+							$this.bindOneElementEvent = false;
+						}
+					}
+				}
 				Mobile.each(this, function() {
 					if(this.addEventListener) {
-						this.addEventListener(type, function(event) {
-							if(Mobile.checkSelector(event.target, el)) {
-								handler.call(event.target, event);
-							}
-
-						}, bl);
+						this.addEventListener(type, f, bl);
 					}
 				});
 
-				m.events.on(type, handler);
+				m.events.on(type, f);
+			}
+
+			// 委托绑定事件传object值
+			if(arguments.length >= 4 && typeof arguments[1] === "string" && typeof arguments[2] === "object" && typeof arguments[3] === "function") {
+				var el = arguments[1].trim();
+				var obj = arguments[2];
+				var handler = arguments[3];
+				var bl = typeof arguments[4] === "boolean" ? arguments[4] : false;
+
+				function f(event) {
+					if(Mobile.checkSelector(event.target, el)) {
+						event.data = obj;
+						handler.call(event.target, event);
+
+						// m(el).one()只绑定一次事件
+						if(isonebind) {
+							m(this).off(type, f, bl);
+							m.events.on(type, f);
+							$this.bindOneElementEvent = false;
+						}
+					}
+
+				}
+				Mobile.each(this, function() {
+					if(this.addEventListener) {
+						this.addEventListener(type, f, bl);
+					}
+				});
+
+				m.events.on(type, f);
 			}
 
 			return this;
@@ -1299,15 +1472,15 @@
 
 			if(arguments.length === 1) {
 				Mobile.each(this, function() {
-					for(var i=m.events.props[type].length-1; i>=0; i--) {
-						
+					for(var i = m.events.props[type].length - 1; i >= 0; i--) {
+
 						if(this.removeEventListener) {
 							this.removeEventListener(type, m.events.props[type][i], false);
 						} else {
 							this.deattachEvent("on" + type, m.events.props[type][i]);
 						}
-						
-						Mobile.events.off(type,m.events.props[type][i]);
+
+						Mobile.events.off(type, m.events.props[type][i]);
 					}
 				});
 
@@ -1322,7 +1495,7 @@
 					this["on" + type] = null;
 					/*直接赋给事件*/
 				}
-				Mobile.events.off(type,handler);
+				Mobile.events.off(type, handler);
 			});
 
 			return this;
@@ -1330,7 +1503,7 @@
 		},
 
 		// 自定义事件
-		trigger: function trigger(type, obj) {
+		trigger: function(type, obj) {
 
 			Mobile.each(this, function() {
 				obj = obj || {};
@@ -1339,6 +1512,21 @@
 				this.dispatchEvent(btnEvent);
 			});
 
+		},
+		emit: function(type, obj) {
+			Mobile.each(this, function() {
+				m(this).trigger(type, obj);
+			});
+		},
+
+		one: function() {
+			var args = arguments;
+			var $this = this;
+			this.bindOneElementEvent = true; //  只绑定一次事件
+			Mobile.each($this, function(i, v) {
+				m(this).on.apply($this, args);
+
+			});
 		},
 
 		// click
@@ -1595,13 +1783,11 @@
 			opt.success = opt.success || function() {};
 			opt.error = opt.error || function() {};
 			opt.contentType = opt.contentType || "application/x-www-form-urlencoded;charset=utf-8";
+			opt.timeout = typeof opt.timeout === "number" ? opt.timeout : 10000;
 			opt.progress = opt.progress || {};
 
 			var xhr = Mobile.createXHR();
-			if(typeof opt.timeout === "number") {
-				xhr.timeout = opt.timeout
-			}
-
+			xhr.timeout = opt.timeout;
 			xhr.xhrFields = opt.xhrFields || {};
 
 			// 连接参数
@@ -1689,10 +1875,11 @@
 			var params = [];
 			var postData = "";
 			if(typeof data === "object") {
-				for(var key in data) {
-					params.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
-				}
-				postData = params && params.join('&');
+				//				for(var key in data) {
+				//					params.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+				//				}
+				//				postData = params && params.join('&');
+				postData = _JoinParams(data)
 			}
 
 			if(postData.length > 0) {
@@ -1708,46 +1895,6 @@
 			document.body.appendChild(script);
 
 		},
-
-		/* CORS 跨域 加进度条*/
-
-		isCORS: function() {
-
-			if(typeof _xhrCORS === "undefined") {
-				_xhrCORS = Mobile.createXHR();
-			}
-			if(typeof _xhrCORS.withCredentials !== "undefined") {
-				return true;
-			}
-
-			return false;
-		},
-
-		//		// ajax
-		//		ajaxCORS: function(opt) {
-		//			if(Mobile.isCORS()) {
-		//				Mobile.ajax(opt);
-		//			} else {
-		//				console.log("not support CORS")
-		//			}
-		//		},
-		//
-		//		// get
-		//		getCORS: function(url, data) {
-		//			if(Mobile.isCORS()) {
-		//				_ajaxFun(url, "get", data, arguments);
-		//			} else {
-		//				console.log("not support CORS")
-		//			}
-		//		},
-		//		// post
-		//		postCORS: function(url, data) {
-		//			if(Mobile.isCORS()) {
-		//				_ajaxFun(url, "post", data, arguments);
-		//			} else {
-		//				console.log("not support CORS")
-		//			}
-		//		}
 
 	});
 
@@ -1959,10 +2106,56 @@
 		trim: function(txt) {
 			var str = "";
 			txt = typeof txt === "string" ? txt : "";
-
 			str = txt.replace(/^\s*|\s*$/img, "");
 			return str;
-		}
+		},
+
+		round: function(value, ratio) {
+
+			if(arguments.length === 1) {
+
+				if(typeof value === "number") {
+					return Math.round(value);
+				}
+
+			} else if(arguments.length === 2) {
+				if(typeof value === "number" && typeof ratio === "number") {
+
+					var _v = Math.floor(value);
+					_v = _v + ratio;
+
+					if(value > _v) {
+						return Math.ceil(value);
+					} else {
+						return Math.floor(value);
+					}
+
+				}
+
+			}
+
+			return null;
+		},
+
+		// 检查是否为移动端
+		isMobile: function() {
+
+			var userAgentInfo = navigator.userAgent.toString().toLowerCase();
+			var Agents = ["Android", "iPhone",
+				"SymbianOS", "Windows Phone",
+				"iPad", "iPod"
+			];
+			//console.log(userAgentInfo)
+			var flag = false;
+			for(var v = 0; v < Agents.length; v++) {
+				if(userAgentInfo.indexOf(Agents[v].toLowerCase()) > 0) {
+					flag = true;
+					break;
+				}
+			}
+			return flag;
+		},
+
 	});
 
 	/**绑定自定义事件函数**/
@@ -2005,6 +2198,147 @@
 		}
 	});
 
+	// transform 
+	Mobile.fn.extend({
+
+		// setTransform
+		setTransform: function(transforName, value) {
+
+			Mobile.each(this, function() {
+				if(!this.transform) {
+					this.transform = {};
+				}
+				this.transform[transforName] = value;
+				var result = '';
+
+				for(var item in this.transform) {
+					switch(item) {
+						case 'rotate':
+						case 'rotateX':
+						case 'rotateY':
+						case 'rotateZ':
+						case 'skewX':
+						case 'skewY':
+						case 'skewZ':
+							result += item + '(' + parseFloat(this.transform[item]) + 'deg)  ';
+							break;
+						case 'skew':
+							var arrs = this.transform[item].split(",");
+							if(arrs.length === 2) {
+								result += item + '(' + parseFloat(arrs[0]) + 'deg,' + parseFloat(arrs[1]) + 'deg)  ';
+							} else {
+								result += item + '(' + parseFloat(arrs) + 'deg,' + 0 + 'deg)  ';
+							}
+							break;
+
+						case 'scaleX':
+						case 'scaleY':
+						case 'scaleZ':
+							result += item + '(' + parseFloat(this.transform[item]) + ')  ';
+							break;
+
+						case 'scale':
+							var arrs = this.transform[item].split(",");
+
+							if(arrs.length === 2) {
+								result += item + '(' + parseFloat(arrs[0]) + ',' + parseFloat(arrs[1]) + ')  ';
+							} else {
+								result += item + '(' + parseFloat(arrs) + ',' + parseFloat(arrs) + ')  ';
+							}
+							break;
+
+						case 'translateX':
+						case 'translateY':
+						case 'translateZ':
+							result += item + '(' + parseFloat(this.transform[item]) + 'px)  ';
+							break;
+						case 'translate':
+							var arrs = this.transform[item].split(",");
+
+							if(arrs.length === 2) {
+								result += item + '(' + parseFloat(arrs[0]) + 'px,' + parseFloat(arrs[1]) + 'px)  ';
+							} else {
+								result += item + '(' + parseFloat(arrs) + 'px,' + 0 + 'px)  ';
+							}
+							break;
+
+					};
+
+				};
+
+				this.style.WebkitTransform = result;
+				this.style.MozTransform = result;
+				this.style.msTransform = result;
+				this.style.OTransform = result;
+				this.style.transform = result;
+
+			});
+
+			return this;
+		},
+
+		// getTransform
+		getTransform: function(transforName) {
+
+			var result = 0;
+			Mobile.each(this, function() {
+				if(!this.transform) {
+					this.transform = {};
+				}
+
+				//读
+				if(typeof this.transform[transforName] == 'undefined') {
+					if(transforName == 'scale' || transforName == 'scaleX' || transforName == 'scaleY') {
+						result = 1
+						if(transforName === "scale") {
+							result = [1, 1];
+						}
+
+					} else {
+						result = 0;
+						if(transforName === "skew" || transforName === "translate") {
+							result = [0, 0];
+						}
+					}
+
+				} else {
+					if(transforName === "skew" || transforName === "translate" || transforName === "scale") {
+						var strs = this.transform[transforName].split(",");
+						var arrs = [];
+						for(var y = 0; y < strs.length; y++) {
+							var v = parseFloat(strs[y]);
+							if(transforName === "scale") {
+								v = isNaN(v) ? 1 : v;
+
+							} else {
+								v = isNaN(v) ? 0 : v;
+							}
+
+							arrs.push(v);
+						}
+
+						if(arrs.length === 1) {
+							if(transforName === "scale") {
+								arrs.push(arrs[0]);
+							} else {
+								arrs.push(0);
+							}
+						}
+						result = arrs;
+
+					} else {
+						result = parseFloat(this.transform[transforName]);
+					}
+
+				}
+
+			});
+
+			return result;
+		},
+
+	});
+
 	//  cmd commonjs
 	if(typeof module === "object" && typeof module.exports === "object") {
 		module.exports = Mobile;
@@ -2016,8 +2350,9 @@
 			return Mobile;
 		});
 	}
+
 	// cmd seajs
-	if(typeof define === "function"&& define.cmd) {
+	if(typeof define === "function" && define.cmd) {
 		define(function(require, exports, module) {
 			module.exports = Mobile;
 		});

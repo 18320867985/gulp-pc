@@ -8,7 +8,7 @@
 		<meta name="Keywords" content="" />
 		<meta name="Description" content="" />
 		<title>首页</title>
-		
+
 		<!--check css-->
 		<script src="js/modernizr-2.6.2.min.js" type="text/javascript" charset="utf-8"></script>
 		<!--css3 prefix-->
@@ -18,25 +18,52 @@
 			<script src="js/html5shiv.js" type="text/javascript" charset="utf-8"></script>
 			<script src="js/respond.min.js" type="text/javascript" charset="utf-8"></script>
 		<![endif]-->
-		
+
 		<!--css-->
 		<link rel="stylesheet" type="text/css" href="css/cstfont/iconfont.css" />
 		<link rel="stylesheet" type="text/css" href="css/all.css" />
 	</head>
 
-	<body >
-	
+	<body>
+
+		<div id="a">
+			<div class="number">
+				<button class="minus btn" type="button">-</button>
+				<input class="num" type="number" value="1" data-min="0" data-max="9999" data-step="1" />
+				<button class="plus btn" type="button">+</button>
+
+			</div>
+		</div>
+		
+		<div id="b">
+			<div class="number">
+				<button class="minus btn" type="button">-</button>
+				<input class="num" type="number" value="11" data-min="0" data-max="9999" data-step="1" />
+				<button class="plus btn" type="button">+</button>
+
+			</div>
+		</div>
+		
 		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/all.js" type="text/javascript" charset="utf-8"></script>
 		<!--[if lte IE 8]>
 			<script src="js/ie8.js" type="text/javascript" charset="utf-8"></script>
 		<![endif]-->
 
-
 		<script type="text/javascript">
-			$(function() {
-  
-			})
+			$("#a").on("number_click", function(event, element) {
+				//element 当前点击的元素	
+				var p = $(element).parents(".number");
+				alert($(p).find(".num").val() + "#a");
+
+			});
+
+			$("#b").on("number_click", function(event, element) {
+				//element 当前点击的元素	
+				var p = $(element).parents(".number");
+				alert($(p).find(".num").val() + "#b");
+
+			});
 		</script>
 	</body>
 
