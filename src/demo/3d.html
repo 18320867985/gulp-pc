@@ -29,7 +29,7 @@
 				width: 200px;
 				height: 200px;
 				margin: auto;
-				padding-top: 200px;
+				padding-top: 100px;
 				transform-style: preserve-3d;
 			}
 			
@@ -49,31 +49,49 @@
 			}
 			
 			.w1 {
-				animation: rotate 30s .5s infinite ease-in;
+				position: absolute;
+				top: 50px;
+				left: 600px;
+				animation: rotate 30s 1s infinite ease-in;
 			}
 			.w1 .side{
 				font-size: 16px;
+				background: rgba(255,100,100,.7);
 			}
 			.w2 {
 				position: absolute;
 				top: 200px;
 				left: 400px;
-				animation: rotate 30s 1s infinite ease-in;
+				animation: rotate 30s 2s infinite ease-in;
+				 
 			}
 			
 			.w2 .side {
 				background: rgba(255, 0, 0, .7);
+				/* backface-visibility:  hidden;*/
 			}
 			
 			.w3 {
 				position: absolute;
 				top: 200px;
 				left: 800px;
-				animation: rotate 30s 1.5s infinite ease-in;
+				animation: rotate 30s 3s infinite ease-in;
 			}
 			
 			.w3 .side {
-				background: rgba(244, 250, 0, .7);
+				background: rgba(0, 250, 0, .7);
+			}
+			
+			.w4 {
+				position: absolute;
+				top: 350px;
+				left: 600px;
+				
+				animation: rotate 30s 4s infinite ease-in;
+			}
+			
+			.w4 .side {
+				background: rgba(0, 0, 255, .7);
 			}
 			
 			.front {
@@ -142,6 +160,17 @@
 			</div>
 
 			<div class="cube w3">
+
+				<div class="side front">1</div>
+				<div class="side back">6</div>
+				<div class="side right">4</div>
+				<div class="side left">3</div>
+				<div class="side top">5</div>
+				<div class="side bottom">2</div>
+
+			</div>
+			
+			<div class="cube w4">
 
 				<div class="side front">1</div>
 				<div class="side back">6</div>
