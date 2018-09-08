@@ -2,7 +2,6 @@
 
 
 /*webkit内核*/
-
 .no-scroll-bar::-webkit-scrollbar {
     width: 0px;
     height: 0px;
@@ -32,17 +31,12 @@
     background-color: rgba(0, 0, 0, 0);
 }
 
-.no-scroll-bar::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-}
-
 
 /*o内核*/
-
 .no-scroll-bar .-o-scrollbar {
     -moz-appearance: none !important;
     background: rgba(0, 255, 0, 0) !important;
+ 
 }
 
 .no-scroll-bar::-o-scrollbar-button {
@@ -71,7 +65,6 @@
 
 
 /*IE10,IE11,IE12*/
-
 .no-scroll-bar {
     -ms-scroll-chaining: chained;
     -ms-overflow-style: none;
@@ -83,4 +76,5 @@
     -ms-scroll-snap-points-x: snapList(100%, 200%, 300%, 400%, 500%);
     -ms-overflow-style: none;
     overflow: auto;
+  
 }
