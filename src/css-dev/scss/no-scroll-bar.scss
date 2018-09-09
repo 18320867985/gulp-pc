@@ -2,6 +2,7 @@
 
 
 /*webkit内核*/
+
 .no-scroll-bar::-webkit-scrollbar {
     width: 0px;
     height: 0px;
@@ -33,10 +34,10 @@
 
 
 /*o内核*/
+
 .no-scroll-bar .-o-scrollbar {
     -moz-appearance: none !important;
     background: rgba(0, 255, 0, 0) !important;
- 
 }
 
 .no-scroll-bar::-o-scrollbar-button {
@@ -64,7 +65,40 @@
 }
 
 
+/*moz*/
+
+.no-scroll-bar -moz-scrollbar {
+    -moz-appearance: none !important;
+    background: rgba(0, 255, 0, 0) !important;
+}
+
+.no-scroll-bar::-moz-scrollbar-button {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.no-scroll-bar::-moz-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.no-scroll-bar::-moz-scrollbar-track-piece {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.no-scroll-bar::-moz-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.no-scroll-bar::-moz-scrollbar-corner {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.no-scroll-bar::-moz-scrollbar-resizer {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+
 /*IE10,IE11,IE12*/
+
 .no-scroll-bar {
     -ms-scroll-chaining: chained;
     -ms-overflow-style: none;
@@ -76,5 +110,41 @@
     -ms-scroll-snap-points-x: snapList(100%, 200%, 300%, 400%, 500%);
     -ms-overflow-style: none;
     overflow: auto;
+}
+
+
+/*moz
+ 引用browser.js
+        <div class="no-scroll-box">
+            <div class="no-scroll-bar">
+                
+            </div>
+           <div class="scroll-slide">
+               <div class="scroll-bar"></div>
+             </div>
+        </div>
+ * */
+
+.no-scroll-box {
+    position: relative;
+    width: 100%;
+    padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
   
+}
+
+.no-scroll-bar {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.no-scroll-box  .scroll-slide{
+    position: absolute !important;
+    top: 0;
+    right: 0;
+    z-index: 999;
+   
 }
