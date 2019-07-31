@@ -141,7 +141,7 @@
 	<body>
 
 		
-		<div class="banner " data-time="4000">
+		<!-- <div class="banner " data-time="4000">
 
 			<div class="banner-wrap">
 				<ul class="clearfix">
@@ -174,7 +174,7 @@
 
 			</div>
 
-		</div>
+		</div> -->
 <hr />
 
 		<div class="banner " data-time="4000">
@@ -215,8 +215,15 @@
 		<script src="js/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
 
 		<script type="text/javascript">
+			
 			$(function() {
 				$(".banner").banner();
+				
+				// 触发onbannershow事件
+				$(document).on("onbannershow",function(e,data){
+					console.log(data)
+				})
+				
 			});
 
 			/**jq extend**/
@@ -312,9 +319,12 @@
 
 							lis.eq(index).stop().show(0).animate({
 								"opacity": 1
-							}, 600);
+							}, 500);
 							lis.eq(index).addClass("active");
 							setRadius(index);
+							
+							// 触发自定义事件
+							lis.eq(index).trigger("onbannershow",lis.eq(index));
 
 						}
 

@@ -254,6 +254,10 @@
 		<script type="text/javascript">
 			$(function() {
 				$(".banner-slide").bannerSlide();
+				// 触发onbannershow事件
+				$(document).on("onslideshow",function(e,data){
+					console.log(data)
+				})
 			});
 
 			/**jq extend**/
@@ -412,6 +416,9 @@
 							//obj.isclick = true;
 							lis.eq(index).addClass("active");
 							setRadius(index % (obj.length / 2));
+							
+							// 触发自定义事件
+							lis.eq(index).trigger("onslideshow",lis.eq(index));
 
 						}
 
