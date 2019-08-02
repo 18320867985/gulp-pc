@@ -314,12 +314,12 @@
 
 							lis.eq(index).siblings().stop().animate({
 								"opacity": 0
-							}, 500).hide();
+							}, 1000).hide();
 							lis.eq(index).siblings().removeClass("active");
 
 							lis.eq(index).stop().show(0).animate({
 								"opacity": 1
-							}, 500);
+							}, 1000);
 							lis.eq(index).addClass("active");
 							setRadius(index);
 							
