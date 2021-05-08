@@ -32,12 +32,12 @@
 		<div class="draggale">
 			<h4 class="draggale-ttl">handle</h4>
 			<div class="content3">
-234234
+
 			</div>
 			<div class="content2">
 
 			</div>
-			<div class="content">
+		</div class="content">
 
 
 	<!-- <script src="js/mobile-1.0.0.js" type="text/javascript" charset="utf-8"></script> -->
@@ -51,11 +51,11 @@
 					draggale: function(option) {
 						option = option || {};
 						option.handle = option.handle || this;
-						$box = this;
+						var $box = this;
 						$(option.handle).on("mousedown", function(event) {
 							event.preventDefault();
 							event.stopPropagation();
-							$this = this;
+							var $this = this;
 							$this.bl = false;
 							if(!$this.bl) {
 								this.bl = true;
