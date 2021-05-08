@@ -3680,6 +3680,8 @@ namespace.extend = function (ns, nsString) {
 
 	return parent;
 };
+
+/*namespace.extend(rootObj, "api").bsDate=(function(){})()*/
 /*
  * 默认js
  * 添加 class="bs-date " 
@@ -3903,27 +3905,174 @@ namespace.extend(rootObj, "api").lazy = function ($) {
 		reset: _reset
 	};
 }(window.jQuery || window.Zepto);
+
 /*
-	 滚动监听
-	 <body data-spy="spy" data-target="#scroll_ttl">
-		 
-		 <aside id="scroll_ttl">
+					 滚动监听
+					 <body data-spy="spy" data-target=".index-slide-pwr>
+						 
+						 <div class="index-slide-pwr">
 
-			<ul>
-				<li class="active">
-					<a href="#banner_1">1</a>
-				</li>
-				<li>
-					<a href="#banner_2">2</a>
-				</li>
-				<li>
-					<a href="#banner_3">3</a>
-				</li>
-			</ul>
+                            <ul class="">
+                                <li class="spy-itm"><a href="#lv0">今日指数</a></li>
+                                <li  class="active spy-itm"><a href="#lv1">价格对比</a></li>
+                                <li class="spy-itm"> <a href="#lv2">行业讯息</a></li>
+                                <li class="spy-itm"><a href="#lv3">价格走势</a></li>
+                                <li class="spy-itm"><a href="#lv4">合作伙伴</a></liclass="spy-item">
+                                <!--<li  class="spy-itm"><a href="#lv-5">友情链接</a></li>-->
 
-		</aside>
-	 </body>
- */
+                                <li class="btn-top"><a href="javascript:;">顶部</a></li>
+
+
+                            </ul>
+                         </div>
+					 </body>
+				 */
+
+(function ($) {
+
+        var obj = {
+
+                init: function init(top) {
+
+                        var _top = Number(top);
+                        _top = isNaN(_top) ? 0 : _top;
+
+                        this.offsetTop = _top;
+                        this.bindEvent(this.offsetTop);
+                        this.onLoad();
+                        this.onReset();
+                },
+
+                offsetTop: 0,
+
+                setOffsetTop: function setOffsetTop(top) {
+                        this.offsetTop = typeof top === "number" ? top : 0;
+                },
+
+                onReset: function onReset() {
+
+                        $(window).resize(function () {
+                                this.scrollList();
+                                this.scroll(this.offsetTop);
+                        }.bind(this));
+                },
+
+                onLoad: function onLoad() {
+
+                        var $this = this;
+                        $(function () {
+
+                                $this.scrollList();
+                                $this.scroll($this.offsetTop);
+                        });
+                },
+
+                selector: function selector() {
+                        var _tagget = $("[data-spy=spy]").attr("data-target");
+                        return $(_tagget);
+                },
+
+                bindEvent: function bindEvent(top) {
+
+                        this.selector().find(".spy-itm  a").click(function () {
+
+                                // animation
+                                var $this = $(this);
+                                var _top = Math.floor($($this.attr("href")).offset().top) - parseInt(top);
+                                $("body,html").stop().animate({
+                                        scrollTop: _top
+                                }, 250);
+                        });
+                },
+                setTimeoutId: 0,
+                scroll: function scroll(top) {
+
+                        var ff = this.getScrollList;
+                        var p = this.selector();
+                        var $this = this;
+                        $(window).on("scroll", function () {
+
+                                $this.setTimeoutId = setTimeout(function () {
+                                        clearTimeout($this.setTimeoutId);
+                                        var arrs = ff || [];
+
+                                        for (var i = 0; i < arrs.length; i++) {
+                                                var item = arrs[i];
+                                                var m1 = parseInt(item.top); //- parseInt(top);
+                                                var m2 = parseInt(item.maxTop); //- parseInt(top);
+                                                if ($(window).scrollTop() >= m1 && $(window).scrollTop() < m2) {
+
+                                                        p.find(".spy-itm").removeClass("active");
+                                                        $("[href=" + item.selector + "]").parent().addClass("active");
+
+                                                        break;
+                                                }
+                                        }
+                                }, 250);
+                        });
+                },
+
+                scrollList: function scrollList() {
+
+                        var objs = [];
+
+                        var _offsetTop = this.offsetTop;
+                        var els = this.selector().find(".spy-itm");
+                        for (var i = 0; i < els.length; i++) {
+
+                                var a = $(els[i]).find("a"); //.attr("href") || "";
+
+                                if (a[0].hasAttribute("href")) {
+                                        var _el = a.attr("href");
+
+                                        var obj = {};
+                                        var _top = Math.floor($(_el).offset().top) - _offsetTop;
+
+                                        var maxTop = 0;
+                                        if (i < els.length - 1) {
+                                                var _el2 = $(els[i + 1]).find("a").attr("href");
+                                                maxTop = Math.floor($(_el2).offset().top) - _offsetTop;
+                                        } else {
+                                                maxTop = Math.floor($(document).height());
+                                        }
+
+                                        obj.selector = _el;
+                                        obj.top = _top;
+                                        obj.maxTop = maxTop;
+                                        objs.push(obj);
+                                }
+                        }
+
+                        return this.getScrollList = objs;
+                },
+
+                getScrollList: []
+
+        };
+
+        window.spy = obj;
+})($);
+/*
+		 滚动监听
+		 <body data-spy="spy" data-target="#scroll_ttl">
+			 
+			 <aside id="scroll_ttl">
+
+				<ul>
+					<li class="active">
+						<a href="#banner_1">1</a>
+					</li>
+					<li>
+						<a href="#banner_2">2</a>
+					</li>
+					<li>
+						<a href="#banner_3">3</a>
+					</li>
+				</ul>
+
+			</aside>
+		 </body>
+	 */
 namespace.extend(rootObj, "api").scroll = function ($) {
 
 	var obj = {
@@ -4590,6 +4739,92 @@ namespace.extend(rootObj, "api").treeSelectAddress = function () {
 		}
 	});
 }(window.jQuery || window.Zepto);
+//  draggale
++function ($) {
+
+	//  draggale
+	$.fn.extend({
+		draggale: function draggale(option) {
+			option = option || {};
+			option.handle = option.handle || this;
+			$box = this;
+			$(option.handle).on("mousedown", function (event) {
+				event.preventDefault();
+				event.stopPropagation();
+				$this = this;
+				$this.bl = false;
+				if (!$this.bl) {
+					this.bl = true;
+					var _offset_top = parseInt($($box).offset().top);
+					var _offset_left = parseInt($($box).offset().left);
+					var _w = parseInt($($box).outerWidth());
+					var _h = parseInt($($box).outerHeight());
+					var _window_w = parseInt($(window).width());
+					var _window_h = parseInt($(window).height());
+					var _space_left = event.clientX - _offset_left;
+					var _space_top = event.clientY - _offset_top;
+					$($this).css("cursor", "move");
+
+					$(document).on("mousemove", function (event2) {
+
+						var _left = event2.clientX - _space_left;
+						var _top = event2.clientY - _space_top;
+
+						// 左边
+						_left = _left <= 0 ? 0 : _left;
+						_left = _left >= _window_w - _w ? _window_w - _w : _left;
+
+						// 上边
+						_top = _top <= 0 ? 0 : _top;
+						_top = _top >= _window_h - _h ? _window_h - _h : _top;
+						$($box).css({
+							left: _left,
+							top: _top,
+							margin: 0
+						});
+					});
+
+					$(document).on("mouseup", function (event) {
+						$(document).off("mousemove");
+						$(document).off("mouseup");
+						$this.bl = false;
+						$($this).css("cursor", "default");
+					});
+				}
+			});
+
+			$(window).resize(function () {
+
+				var _offset_top = parseInt($($box).offset().top);
+				var _offset_left = parseInt($($box).offset().left);
+				var _w = parseInt($($box).outerWidth());
+				var _h = parseInt($($box).outerHeight());
+				var _window_w = parseInt($(window).width());
+				var _window_h = parseInt($(window).height());
+				var _left = _offset_left + _w >= _window_w ? _window_w - _w : _offset_left;
+				var _top = _offset_top + _h >= _window_h ? _window_h - _h : _offset_top;
+				if (_offset_left <= 0) {
+					_left = 0;
+				}
+				if (_offset_top <= 0) {
+					_top = 0;
+				}
+				$($box).css({
+					left: _left,
+					top: _top,
+					margin: 0
+				});
+			});
+		}
+
+	});
+}(window.jQuery);
+
+// 使用方法
+//			$(".draggale").draggale({
+//				handle: ".draggale-ttl"
+//			});
+//
 /*
  * 消息框
   
@@ -4930,97 +5165,97 @@ namespace.extend(rootObj, "api").treeSelectAddress = function () {
 
 +function ($) {
 
-	//minus
-	$(document).on("click", ".minus", function (e) {
-		e.stopPropagation();
-		e.preventDefault();
+			//minus
+			$(document).on("click", ".minus", function (e) {
+						e.stopPropagation();
+						e.preventDefault();
 
-		var p = $(this).parents(".number");
+						var p = $(this).parents(".number");
 
-		//步长
-		var step = Number($(".num", p).attr("data-step"));
-		step = window.isNaN(step) ? 1 : step;
+						//步长
+						var step = Number($(".num", p).attr("data-step"));
+						step = window.isNaN(step) ? 1 : step;
 
-		//最大值
-		//			var max=Number($(".num",p).attr("data-max"));
-		//				max=window.isNaN(max)?9999:max;
-		//最小值
-		var min = Number($(".num", p).attr("data-min"));
-		min = window.isNaN(min) ? 0 : min;
+						//最大值
+						//			var max=Number($(".num",p).attr("data-max"));
+						//				max=window.isNaN(max)?9999:max;
+						//最小值
+						var min = Number($(".num", p).attr("data-min"));
+						min = window.isNaN(min) ? 0 : min;
 
-		var v = Number($(".num", p).val());
-		v = window.isNaN(v) ? min : v;
+						var v = Number($(".num", p).val());
+						v = window.isNaN(v) ? min : v;
 
-		//计算
-		v = v > min ? v - step : min;
+						//计算
+						v = v > min ? v - step : min;
 
-		if (v <= min) {
-			v = min;
-		}
+						if (v <= min) {
+									v = min;
+						}
 
-		$(".num", p).val(v);
+						$(".num", p).val(v);
 
-		//点击触发自定义事件
-		$(this).trigger("number_click", [this]);
-	});
+						//点击触发自定义事件
+						$(this).trigger("number_click", [this]);
+			});
 
-	//plus
-	$(document).on("click", ".plus", function (e) {
-		e.stopPropagation();
-		e.preventDefault();
-		var p = $(this).parents(".number");
+			//plus
+			$(document).on("click", ".plus", function (e) {
+						e.stopPropagation();
+						e.preventDefault();
+						var p = $(this).parents(".number");
 
-		//步长
-		var step = Number($(".num", p).attr("data-step"));
-		step = window.isNaN(step) ? 1 : step;
+						//步长
+						var step = Number($(".num", p).attr("data-step"));
+						step = window.isNaN(step) ? 1 : step;
 
-		//最大值
-		var max = Number($(".num", p).attr("data-max"));
-		max = window.isNaN(max) ? 9999 : max;
-		//最小值
-		var min = Number($(".num", p).attr("data-min"));
-		min = window.isNaN(min) ? 0 : min;
+						//最大值
+						var max = Number($(".num", p).attr("data-max"));
+						max = window.isNaN(max) ? 9999 : max;
+						//最小值
+						var min = Number($(".num", p).attr("data-min"));
+						min = window.isNaN(min) ? 0 : min;
 
-		var v = Number($(".num", p).val());
-		v = window.isNaN(v) ? min : v;
+						var v = Number($(".num", p).val());
+						v = window.isNaN(v) ? min : v;
 
-		//计算
-		v = v < max ? v + step : max;
+						//计算
+						v = v < max ? v + step : max;
 
-		if (v >= max) {
-			v = max;
-		}
+						if (v >= max) {
+									v = max;
+						}
 
-		$(".num", p).val(v);
-		//点击触发自定义事件
-		$(this).trigger("number_click", [this]);
-	});
+						$(".num", p).val(v);
+						//点击触发自定义事件
+						$(this).trigger("number_click", [this]);
+			});
 
-	// value
-	$(document).on("blur", ".num", function (e) {
-		var p = $(this).parents(".number");
-		//最大值
-		var max = Number($(".num", p).attr("data-max"));
-		max = window.isNaN(max) ? 9999 : max;
-		//最小值
-		var min = Number($(".num", p).attr("data-min"));
-		min = window.isNaN(min) ? 0 : min;
+			// value
+			$(document).on("blur", ".num", function (e) {
+						var p = $(this).parents(".number");
+						//最大值
+						var max = Number($(".num", p).attr("data-max"));
+						max = window.isNaN(max) ? 9999 : max;
+						//最小值
+						var min = Number($(".num", p).attr("data-min"));
+						min = window.isNaN(min) ? 0 : min;
 
-		var v = Number($(".num", p).val());
-		v = window.isNaN(v) ? min : v;
+						var v = Number($(".num", p).val());
+						v = window.isNaN(v) ? min : v;
 
-		if (v > max) {
-			v = max;
-		}
+						if (v > max) {
+									v = max;
+						}
 
-		if (v < min) {
-			v = min;
-		}
+						if (v < min) {
+									v = min;
+						}
 
-		$(".num", p).val(v);
-		//点击触发自定义事件
-		$(this).trigger("number_click", [this]);
-	});
+						$(".num", p).val(v);
+						//点击触发自定义事件
+						$(this).trigger("number_click", [this]);
+			});
 }(window.jQuery || window.Zepto);
 
 /*****数字框组件end******/

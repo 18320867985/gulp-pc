@@ -5,6 +5,7 @@
  * 
  */
 
+
 namespace.extend(rootObj, "api").bsDate = (function($) {
 
 	var _init = function() {

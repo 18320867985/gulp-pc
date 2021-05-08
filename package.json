@@ -31,7 +31,8 @@
     "typescript": "^2.8.3"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "   gulp watch",
+    "build": " gulp del && gulp  js  && gulp css"
   },
   "author": "",
   "license": "ISC",
